@@ -26,14 +26,6 @@ public class SchoolController {
         return "success"; // This will show the success page
     }
 
-    @PostMapping("/sendConfirmationEmail")
-    @ResponseBody
-    public String sendConfirmationEmail() {
-        // Add your email sending logic here
-        // This is just a placeholder response
-        return "Email sent successfully";
-    }
-
     @PostMapping("/cancelOperation")
     public String cancelOperation() {
         return "redirect:/welcome";
