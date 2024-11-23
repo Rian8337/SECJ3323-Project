@@ -96,7 +96,7 @@ public class AdminController {
         user1.setId("U001");
         user1.setName("Siti Noor");
         user1.setInstitution("PPD");
-        user1.setEmail("john.doe@ppd.com");
+        user1.setEmail("siti@ppd.com");
         user1.setPhone("+60 23456789");
         users.add(user1);
 
@@ -104,7 +104,7 @@ public class AdminController {
         user2.setId("U002");
         user2.setName("Aqilla Noorshaumy");
         user2.setInstitution("JPNJ");
-        user2.setEmail("jane.smith@jpnj.com");
+        user2.setEmail("aqilla@jpnj.com");
         user2.setPhone("+60 34567890");
         users.add(user2);
 
