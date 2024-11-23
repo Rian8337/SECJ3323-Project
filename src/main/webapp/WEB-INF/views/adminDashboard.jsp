@@ -20,7 +20,7 @@
         }
 
        .sidebar a {
-    color: black;  /* Default text color */
+    color: ;  /* Default text color */
     font-weight: 500;
     padding: 10px 15px;
     border-radius: 5px;
@@ -42,11 +42,14 @@
             margin-top: 50px;
         }
 
-        .breadcrumb-container {
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
+.breadcrumb-container {
+    background-color: #d1e7ff;  
+    margin-bottom: 0; 
+    width: 100%; 
+    padding: 20px 0;  
+}
+
+
 
         .breadcrumb a {
             text-decoration: none;
@@ -58,7 +61,7 @@
         }
 
         .breadcrumb .active {
-            color: #6c757d;
+            color: blue;
         }
 
         h1 {
@@ -68,7 +71,7 @@
         }
 
         h3 {
-            color: #34495e;
+            color: black;
         }
 
         .btn-primary {
@@ -136,7 +139,7 @@ form button:hover {
                 <div class="d-flex flex-column">
                     <a href="#" class="btn btn-light mb-2">Dashboard</a>
                     <a href="#" class="btn btn-light mb-2">Students</a>
-                    <a href="viewUsers" class="btn btn-light mb-2">Administration</a>
+                    <a href="viewUsers" class="btn btn-light mb-2">User Administration</a>
                     <a href="#" class="btn btn-light mb-2">Teachers</a>
                     <a href="#" class="btn btn-light mb-2">Financial</a>
                     <a href="#" class="btn btn-light mb-2">Contents</a>
