@@ -1,4 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -91,6 +90,16 @@
                         <tr>
                             <th>School ID</th>
                             <td>${school.schoolId}</td>
+                        </tr>
+                        <tr>
+                            <th>Video</th>
+                            <td>
+                                <div>
+                                    <img src="https://img.youtube.com/vi/${school.video.videoUrl.split('=')[1]}/hqdefault.jpg" alt="Video Thumbnail" width="150">
+                                    <p>Created by: ${school.video.studentName}</p>
+                                    <a href="${school.video.videoUrl}" target="_blank">Watch Video</a>
+                                </div>
+                            </td>
                         </tr>
                     </table>
                 </div>

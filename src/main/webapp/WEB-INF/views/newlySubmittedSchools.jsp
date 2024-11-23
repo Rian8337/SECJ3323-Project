@@ -49,13 +49,44 @@
 
                 <h2>Newly Submitted Schools</h2>
 
+                <!-- Filter and Sort Section -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <input type="text" id="schoolNameFilter" onkeyup="filterSchools()" placeholder="Filter by School Name" class="form-control mb-2">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" id="districtFilter" onkeyup="filterSchools()" placeholder="Filter by District" class="form-control mb-2">
+                    </div>
+                    <div class="col-md-4">
+                        <select id="statusFilter" onchange="filterSchools()" class="form-control mb-2">
+                            <option value="">Filter by Status</option>
+                            <option value="Verified">Verified</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" id="equipmentLevelFilter" onkeyup="filterSchools()" placeholder="Filter by Equipment Level" class="form-control mb-2">
+                    </div>
+                    <div class="col-md-4">
+                        <select id="sortByEquipmentLevel" onchange="sortTable()" class="form-control mb-2">
+                            <option value="desc">Sort by Equipment Level: Highest to Lowest</option>
+                            <option value="asc">Sort by Equipment Level: Lowest to Highest</option>
+                        </select>
+                    </div>
+                </div>
+
                 <!-- Table -->
                 <div class="table-container">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="schoolTable">
                         <thead>
                             <tr>
                                 <th>School Name</th>
+                                <th>District</th>
                                 <th>Status</th>
+                                <th>Equipment Level</th>
+                                <th>Total Students</th>
+                                <th>Total Videos</th>
                                 <th>View</th>
                             </tr>
                         </thead>
@@ -63,6 +94,7 @@
                             <c:forEach var="school" items="${schools}">
                                 <tr>
                                     <td>${school.schoolName}</td>
+                                    <td>${school.district}</td>
                                     <td>
                                         <span class="badge 
                                             ${school.status == 'Verified' ? 'bg-success' : 
@@ -71,6 +103,9 @@
                                             ${school.status}
                                         </span>
                                     </td>
+                                    <td>${school.equipmentLevel}</td>
+                                    <td>${school.totalStudents}</td>
+                                    <td>${school.totalVideos}</td>
                                     <td>
                                         <a href="schoolInfo?id=${school.schoolId}" class="btn btn-link">View</a>
                                     </td>
@@ -87,5 +122,63 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript for filtering and sorting -->
+    <script>
+        // Function to filter schools based on search criteria
+        function filterSchools() {
+            // Get filter values
+            var schoolNameFilter = document.getElementById('schoolNameFilter').value.toLowerCase();
+            var districtFilter = document.getElementById('districtFilter').value.toLowerCase();
+            var statusFilter = document.getElementById('statusFilter').value.toLowerCase();
+            var equipmentLevelFilter = document.getElementById('equipmentLevelFilter').value.toLowerCase();
+        
+            // Get all rows from the table except the header row
+            var rows = document.querySelectorAll('#schoolTable tbody tr');
+        
+            // Loop through all rows and hide those that don't match the filter criteria
+            rows.forEach(function(row) {
+                var schoolName = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                var district = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                var status = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+                var equipmentLevel = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+        
+                // Check if the row matches all filter conditions
+                if (schoolName.indexOf(schoolNameFilter) > -1 &&
+                    district.indexOf(districtFilter) > -1 &&
+                    status.indexOf(statusFilter) > -1 &&
+                    equipmentLevel.indexOf(equipmentLevelFilter) > -1) {
+                    row.style.display = '';  // Show the row if it matches the filters
+                } else {
+                    row.style.display = 'none';  // Hide the row if it does not match
+                }
+            });
+        }
+
+        // Function to sort the table by equipment level
+        function sortTable() {
+            var table = document.getElementById("schoolTable");
+            var rows = Array.from(table.rows).slice(1); // Get all rows except the header
+        
+            // Get the selected sort direction
+            var sortDirection = document.getElementById('sortByEquipmentLevel').value;
+        
+            rows.sort(function(rowA, rowB) {
+                var levelA = parseInt(rowA.cells[3].textContent); // Equipment Level for rowA
+                var levelB = parseInt(rowB.cells[3].textContent); // Equipment Level for rowB
+        
+                if (sortDirection === 'desc') {
+                    return levelB - levelA; // Sort descending
+                } else {
+                    return levelA - levelB; // Sort ascending
+                }
+            });
+        
+            // Re-order the rows in the table
+            rows.forEach(function(row) {
+                table.appendChild(row);
+            });
+        }
+    </script>
 </body>
 </html>

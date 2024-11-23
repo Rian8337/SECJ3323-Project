@@ -37,42 +37,43 @@
             <div class="col-md-10 main-content">
                 <h2>Edit School Information</h2>
 
+                <!-- Form for updating school -->
                 <form:form id="editSchoolForm" action="updateSchool" method="post" modelAttribute="school">
                     <input type="hidden" name="schoolId" value="${school.schoolId}">
                     
                     <div class="mb-3">
                         <label class="form-label">School Name</label>
-                        <input type="text" class="form-control" name="schoolName" value="${school.schoolName}">
+                        <input type="text" class="form-control" name="schoolName" value="${school.schoolName}" required>
                     </div>
                     
                     <div class="mb-3">
                         <label class="form-label">Principal Name</label>
-                        <input type="text" class="form-control" name="principalName" value="${school.principalName}">
+                        <input type="text" class="form-control" name="principalName" value="${school.principalName}" required>
                     </div>
                     
                     <div class="mb-3">
                         <label class="form-label">District</label>
-                        <input type="text" class="form-control" name="district" value="${school.district}">
+                        <input type="text" class="form-control" name="district" value="${school.district}" required>
                     </div>
                     
                     <div class="mb-3">
                         <label class="form-label">Address</label>
-                        <input type="text" class="form-control" name="address" value="${school.address}">
+                        <input type="text" class="form-control" name="address" value="${school.address}" required>
                     </div>
                     
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" value="${school.email}">
+                        <input type="email" class="form-control" name="email" value="${school.email}" required>
                     </div>
                     
                     <div class="mb-3">
                         <label class="form-label">Phone</label>
-                        <input type="text" class="form-control" name="phone" value="${school.phone}">
+                        <input type="text" class="form-control" name="phone" value="${school.phone}" required>
                     </div>
                     
                     <div class="mb-3">
                         <label class="form-label">Admission Date</label>
-                        <input type="text" class="form-control" name="admissionDate" value="${school.admissionDate}">
+                        <input type="text" class="form-control" name="admissionDate" value="${school.admissionDate}" required>
                     </div>
                     
                     <div class="mb-3">
@@ -84,7 +85,8 @@
                         </select>
                     </div>
                     
-                    <button type="button" class="btn btn-primary" onclick="showConfirmModal()">Update</button>
+                    <!-- Buttons: Update and Cancel -->
+                    <button type="button" class="btn btn-warning" onclick="showConfirmModal()">Update</button>
                     <a href="newlySubmittedSchools" class="btn btn-secondary">Cancel</a>
                 </form:form>
             </div>

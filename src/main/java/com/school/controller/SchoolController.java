@@ -30,4 +30,11 @@ public class SchoolController {
     public String cancelOperation() {
         return "redirect:/welcome";
     }
+    
+    @GetMapping("/editSchool")
+    public String editSchool() {
+        // Fetch school details and add to model
+        return "editSchool"; // Returns the name of the view (editSchool.jsp or editSchool.html)
+    }
 }
+
