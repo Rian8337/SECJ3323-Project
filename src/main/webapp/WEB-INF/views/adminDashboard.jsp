@@ -43,7 +43,7 @@
                 <div class="d-flex flex-column">
                     <a href="#" class="btn btn-light mb-2">Dashboard</a>
                     <a href="#" class="btn btn-light mb-2">Students</a>
-                    <a href="#" class="btn btn-light mb-2">Administration</a>
+                    <a href="viewUsers" class="btn btn-light mb-2">Manage Users</a>
                     <a href="#" class="btn btn-light mb-2">Teachers</a>
                     <a href="#" class="btn btn-light mb-2">Financial</a>
                     <a href="#" class="btn btn-light mb-2">Contents</a>
