@@ -13,29 +13,29 @@ import com.school.model.School;
 public class SchoolController {
     @GetMapping("/welcome")
     public String showWelcome() {
-        return "welcome";
+        return "school/welcome";
     }
 
     @GetMapping("/addSchool")
     public String showAddSchoolForm() {
-        return "addSchool";
+        return "school/addSchool";
     }
 
     @PostMapping("/submitSchool")
     public String submitSchool(@ModelAttribute School school) {
         // Add your logic to save the school information
-        return "success"; // This will show the success page
+        return "school/success"; // This will show the success page
     }
 
     @PostMapping("/cancelOperation")
     public String cancelOperation() {
-        return "redirect:/welcome";
+        return "redirect:/school/welcome";
     }
 
     @GetMapping("/editSchool")
     public String editSchool() {
         // Fetch school details and add to model
-        return "editSchool"; // Returns the name of the view (editSchool.jsp or editSchool.html)
+        return "school/editSchool"; // Returns the name of the view (editSchool.jsp or editSchool.html)
     }
 }
 

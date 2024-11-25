@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.school.model.School;
-import com.school.model.School.Video;
+import com.school.model.Video;
 import com.school.model.User;
 
 @Controller
@@ -20,13 +20,13 @@ import com.school.model.User;
 public class AdminController {
     @GetMapping
     public String showAdminDashboard() {
-        return "adminDashboard"; // This must match the name of your HTML template
+        return "admin/adminDashboard"; // This must match the name of your HTML template
     }
 
     @GetMapping("/newlySubmittedSchools")
     public String showNewlySubmittedSchools(Model model) {
         model.addAttribute("schools", schools);
-        return "newlySubmittedSchools";
+        return "admin/newlySubmittedSchools";
     }
 
     private static List<School> schools = new ArrayList<>();
@@ -95,7 +95,7 @@ public class AdminController {
                 .orElse(null);
 
         model.addAttribute("school", school);
-        return "schoolInfo";
+        return "admin/schoolInfo";
     }
 
     private static List<User> users = new ArrayList<>();
@@ -139,7 +139,7 @@ public class AdminController {
     @GetMapping("/viewUsers")
     public String showUsers(Model model) {
         model.addAttribute("users", users);
-        return "viewUsers";  // View the list of users
+        return "admin/viewUsers";  // View the list of users
     }
 
     // Edit user
@@ -151,7 +151,7 @@ public class AdminController {
                 .orElse(null);
 
         model.addAttribute("user", user);
-        return "editUser";  // Form to edit user details
+        return "admin/editUser";  // Form to edit user details
     }
 
     @PostMapping("/updateUser")
@@ -166,13 +166,13 @@ public class AdminController {
                     user.setPhone(updatedUser.getPhone());
                 });
 
-        return "redirect:/viewUsers";
+        return "redirect:/admin/viewUsers";
     }
 
     // Delete user
     @GetMapping("/deleteUser")
     public String deleteUser(@RequestParam("id") String userId, Model model) {
         users.removeIf(u -> u.getId().equals(userId));
-        return "redirect:/viewUsers";  // Redirect to user list after deletion
+        return "redirect:/admin/viewUsers";  // Redirect to user list after deletion
     }
 }
