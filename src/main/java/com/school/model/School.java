@@ -12,14 +12,13 @@ public class School {
     private String admissionDate;
     private String status;
     private String schoolId;
-    
 
     // New Fields
     private List<String> equipment; // List to store equipment items
     private int equipmentLevel;      // Equipment level rating (1-5)
     private int totalStudents;       // Total number of students
     private int totalVideos;         // Total number of videos uploaded
-    
+
     private Video video; // Add the video field
 
     // Getters and setters for the video
@@ -65,34 +64,78 @@ public class School {
     }
 
     // Existing Getters and Setters
-    public String getSchoolName() { return schoolName; }
-    public void setSchoolName(String schoolName) { this.schoolName = schoolName; }
+    public String getSchoolName() {
+        return schoolName;
+    }
 
-    public String getPrincipalName() { return principalName; }
-    public void setPrincipalName(String principalName) { this.principalName = principalName; }
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
 
-    public String getDistrict() { return district; }
-    public void setDistrict(String district) { this.district = district; }
+    public String getPrincipalName() {
+        return principalName;
+    }
 
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
+    public void setPrincipalName(String principalName) {
+        this.principalName = principalName;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getDistrict() {
+        return district;
+    }
 
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
+    public void setDistrict(String district) {
+        this.district = district;
+    }
 
-    public String getAdmissionDate() { return admissionDate; }
-    public void setAdmissionDate(String admissionDate) { this.admissionDate = admissionDate; }
+    public String getAddress() {
+        return address;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-    public String getSchoolId() { return schoolId; }
-    public void setSchoolId(String schoolId) { this.schoolId = schoolId; }
-    
-    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAdmissionDate() {
+        return admissionDate;
+    }
+
+    public void setAdmissionDate(String admissionDate) {
+        this.admissionDate = admissionDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(String schoolId) {
+        this.schoolId = schoolId;
+    }
+
     public static class Video {
         private String videoUrl;
         private String studentName;

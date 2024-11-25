@@ -4,12 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.school.model.School;
 
 @Controller
+@RequestMapping("/school")
 public class SchoolController {
-
     @GetMapping("/welcome")
     public String showWelcome() {
         return "welcome";
@@ -30,7 +31,7 @@ public class SchoolController {
     public String cancelOperation() {
         return "redirect:/welcome";
     }
-    
+
     @GetMapping("/editSchool")
     public String editSchool() {
         // Fetch school details and add to model
