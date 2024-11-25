@@ -139,7 +139,7 @@ form button:hover {
                 <div class="d-flex flex-column">
                     <a href="#" class="btn btn-light mb-2">Dashboard</a>
                     <a href="#" class="btn btn-light mb-2">Students</a>
-                    <a href="viewUsers" class="btn btn-light mb-2">User Administration</a>
+                    <a href="admin/viewUsers" class="btn btn-light mb-2">User Administration</a>
                     <a href="#" class="btn btn-light mb-2">Teachers</a>
                     <a href="#" class="btn btn-light mb-2">Financial</a>
                     <a href="#" class="btn btn-light mb-2">Contents</a>
@@ -164,7 +164,7 @@ form button:hover {
                 <h1>WELCOME, ADMIN..</h1>
 
                 <!-- Newly Submitted Schools Button -->
-                <form action="newlySubmittedSchools" method="get">
+                <form action="admin/newlySubmittedSchools" method="get">
                     <button type="submit" class="btn btn-primary">Newly Submitted Schools</button>
                 </form>
             </div>

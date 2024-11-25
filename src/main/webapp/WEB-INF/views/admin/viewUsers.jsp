@@ -60,7 +60,7 @@
 </head>
 <body>
     <div class="container">
-        <a href="admin" class="btn btn-back">Back to Admin Panel</a>
+        <a href="../admin" class="btn btn-back">Back to Admin Panel</a>
         
         <h2 class="my-4">Manage Users</h2>
 

@@ -73,8 +73,7 @@ public class AdminController {
                 "Tripod",
                 "Mobile lighting",
                 "Mobile Green Screen set",
-                "Editing Software (Open Source)"
-        ));
+                "Editing Software (Open Source)"));
         school2.setEquipment(equipmentList);
         school2.setEquipmentLevel(2);
         school2.setTotalStudents(1200);
@@ -139,7 +138,7 @@ public class AdminController {
     @GetMapping("/viewUsers")
     public String showUsers(Model model) {
         model.addAttribute("users", users);
-        return "admin/viewUsers";  // View the list of users
+        return "admin/viewUsers"; // View the list of users
     }
 
     // Edit user
@@ -151,7 +150,7 @@ public class AdminController {
                 .orElse(null);
 
         model.addAttribute("user", user);
-        return "admin/editUser";  // Form to edit user details
+        return "admin/editUser"; // Form to edit user details
     }
 
     @PostMapping("/updateUser")
@@ -166,13 +165,13 @@ public class AdminController {
                     user.setPhone(updatedUser.getPhone());
                 });
 
-        return "redirect:/admin/viewUsers";
+        return "admin/viewUsers";
     }
 
     // Delete user
     @GetMapping("/deleteUser")
     public String deleteUser(@RequestParam("id") String userId, Model model) {
         users.removeIf(u -> u.getId().equals(userId));
-        return "redirect:/admin/viewUsers";  // Redirect to user list after deletion
+        return "admin/viewUsers"; // Redirect to user list after deletion
     }
 }

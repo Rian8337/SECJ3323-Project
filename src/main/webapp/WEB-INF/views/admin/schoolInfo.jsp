@@ -106,8 +106,8 @@
 
                 <!-- Back and Update Buttons -->
                 <div class="mt-3">
-                    <a href="newlySubmittedSchools" class="btn btn-primary me-2">Back</a>
-                    <a href="editSchool?id=${school.schoolId}" class="btn btn-warning">Update</a>
+                    <a href="../admin/newlySubmittedSchools" class="btn btn-primary me-2">Back</a>
+                    <a href="school/editSchool?id=${school.schoolId}" class="btn btn-warning">Update</a>
                 </div>
             </div>
         </div>

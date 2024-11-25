@@ -117,7 +117,7 @@
 
                 <!-- Back Button -->
                 <div class="mt-3">
-                    <a href="admin" class="btn btn-primary">Back</a>
+                    <a href="../admin" class="btn btn-primary">Back</a>
                 </div>
             </div>
         </div>

@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <h2 class="my-4">Edit User</h2>
-        <form action="/updateUser" method="post">
+        <form action="updateUser" method="post">
             <input type="hidden" name="id" value="${user.id}">
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
