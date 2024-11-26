@@ -89,11 +89,12 @@
                                 required
                             >
                                 <option value="">Select category...</option>
-                                <option value="science">Science</option>
-                                <option value="mathematics">Mathematics</option>
-                                <option value="history">History</option>
-                                <option value="geography">Geography</option>
-                                <option value="literature">Literature</option>
+                                <option
+                                    th:each="category : ${categories}"
+                                    th:value="${category.name().toLowerCase()}"
+                                    th:text="${category.toString()}"
+                                    th:selected="${selectedCategory.equalsIgnoreCase(category.name())}"
+                                ></option>
                             </select>
                         </div>
 

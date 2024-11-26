@@ -81,7 +81,11 @@ public class LibraryController {
     }
 
     @GetMapping("/upload")
-    public String getUploadForm() {
+    public String getUploadForm(final Model model) {
+        model.addAttribute("link", "");
+        model.addAttribute("selectedCategory", "");
+        model.addAttribute("categories", ContentCategory.values());
+
         return "library/upload";
     }
 
