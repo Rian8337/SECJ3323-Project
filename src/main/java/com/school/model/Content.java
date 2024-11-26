@@ -2,6 +2,8 @@ package com.school.model;
 
 import java.util.Date;
 
+import com.school.constants.ContentCategory;
+
 /**
  * Represents a content that is uploaded by a student of a school.
  */
@@ -10,7 +12,7 @@ public class Content {
     private String title;
     private String author;
     private Date uploadedDate;
-    private String category;
+    private ContentCategory category;
 
     public String getId() {
         return id;
@@ -44,11 +46,11 @@ public class Content {
         this.uploadedDate = uploadedDate;
     }
 
-    public String getCategory() {
+    public ContentCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(ContentCategory category) {
         this.category = category;
     }
 }

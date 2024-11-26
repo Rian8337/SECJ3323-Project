@@ -3,12 +3,17 @@ package com.school.controller;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.school.constants.ContentCategory;
 import com.school.model.Content;
 
 @Controller
@@ -19,13 +24,13 @@ public class LibraryController {
 
     public LibraryController() {
         // Add dummy content data
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 5; i++) {
             final Content content = new Content();
 
             content.setId(String.valueOf(i + 1));
             content.setTitle("Introduction to " + (i % 2 == 0 ? "Java" : "Python"));
             content.setAuthor("Fadhil Raihan Gunawan");
-            content.setCategory("Programming");
+            content.setCategory(ContentCategory.PROGRAMMING);
             content.setUploadedDate(new Date());
             contents.add(content);
         }
@@ -57,7 +62,7 @@ public class LibraryController {
             for (Content content : contents) {
                 if (content.getTitle().toLowerCase().contains(searchQuery.toLowerCase())
                         || content.getAuthor().toLowerCase().contains(searchQuery.toLowerCase())
-                        || content.getCategory().toLowerCase().contains(searchQuery.toLowerCase())) {
+                        || content.getCategory().name().toLowerCase().contains(searchQuery.toLowerCase())) {
                     filteredContents.add(content);
                 }
 
@@ -73,5 +78,35 @@ public class LibraryController {
         }
 
         return model;
+    }
+
+    @GetMapping("/upload")
+    public String getUploadForm() {
+        return "library/upload";
+    }
+
+    @SuppressWarnings("null")
+    @PostMapping(value = "/upload", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String postUploadContent(@RequestBody MultiValueMap<String, String> formData) {
+        if (!formData.containsKey("link") || formData.getFirst("link").isEmpty()) {
+            return "redirect:/library/upload";
+        }
+
+        if (!formData.containsKey("category") || formData.getFirst("category").isEmpty()) {
+            return "redirect:/library/upload";
+        }
+
+        // TODO: request YouTube for video information. For now, use dummy data
+        final Content content = new Content();
+
+        content.setId(String.valueOf(contents.size() + 1));
+        content.setTitle("Dummy title " + (contents.size() + 1));
+        content.setAuthor("Dummy author " + (contents.size() + 1));
+        content.setCategory(ContentCategory.from(formData.getFirst("category")));
+        content.setUploadedDate(new Date());
+
+        contents.add(content);
+
+        return "redirect:/library/contents";
     }
 }
