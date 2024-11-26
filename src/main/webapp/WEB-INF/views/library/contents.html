@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Uploaded Contents</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            .sidebar {
+                background-color: #f8f9fa;
+                min-height: 100vh;
+                padding: 20px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-2 sidebar">
+                    <div class="d-flex flex-column">
+                        <a href="#" class="btn btn-light mb-2">Dashboard</a>
+                        <a href="#" class="btn btn-light mb-2">Student</a>
+                        <a href="#" class="btn btn-light mb-2">Parents</a>
+                        <a href="#" class="btn btn-light mb-2">Teachers</a>
+                        <a href="#" class="btn btn-light mb-2">Contents</a>
+                        <a href="#" class="btn btn-light mb-2">Settings</a>
+                    </div>
+                </div>
+
+                <!-- Main content -->
+                <div class="col-md-10 main-content">
+                    <!-- Breadcrumb -->
+                    <div class="breadcrumb-container mb-4">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="../">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="../library">Content Library</a>
+                                </li>
+                                <li
+                                    class="breadcrumb-item active"
+                                    aria-current="page"
+                                >
+                                    Uploaded Contents
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+
+                    <h1>Uploaded Contents</h1>
+
+                    <div class="mb-3">
+                        <input
+                            id="searchQuery"
+                            type="text"
+                            placeholder="Search..."
+                            th:value="${searchQuery}"
+                        />
+
+                        <button
+                            id="searchButton"
+                            type="button"
+                            class="btn btn-primary"
+                        >
+                            Search
+                        </button>
+                    </div>
+
+                    <hr />
+
+                    <th:block th:each="item : ${items}">
+                        <div class="row align-items-center">
+                            <div class="col-9">
+                                <h4 th:text="${item.title}"></h4>
+                                <p th:text="${item.author}"></p>
+
+                                <div class="row">
+                                    <div class="col-9 fw-light">
+                                        Uploaded in
+                                        <span
+                                            th:text="${#dates.format(item.uploadedDate, 'MMM dd, yyyy')}"
+                                        ></span>
+                                    </div>
+
+                                    <div
+                                        class="col fw-bold text-end"
+                                        th:text="${item.category}"
+                                    ></div>
+                                </div>
+                            </div>
+
+                            <div class="col text-center">Thumbnail</div>
+                        </div>
+
+                        <hr />
+                    </th:block>
+
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <th:block
+                                th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder)}"
+                            >
+                                <th:block th:if="${page > 1}">
+                                    <li class="page-item">
+                                        <a
+                                            class="page-link"
+                                            th:href="${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page - 1).toUriString()}"
+                                            aria-label="Previous"
+                                        >
+                                            <span aria-hidden="true"
+                                                >&laquo;</span
+                                            >
+                                        </a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a
+                                            class="page-link"
+                                            th:href="${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page - 1).toUriString()}"
+                                            th:text="${page - 1}"
+                                        >
+                                        </a>
+                                    </li>
+                                </th:block>
+
+                                <li
+                                    class="page-item active"
+                                    aria-current="page"
+                                >
+                                    <a
+                                        class="page-link"
+                                        href="#"
+                                        th:text="${page}"
+                                    ></a>
+                                </li>
+
+                                <th:block th:if="${items.size() == 20}">
+                                    <li class="page-item">
+                                        <a
+                                            class="page-link"
+                                            th:href="${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page + 1).toUriString()}"
+                                            th:text="${page + 1}"
+                                        >
+                                        </a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a
+                                            class="page-link"
+                                            th:href="${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page + 1).toUriString()}"
+                                            aria-label="Next"
+                                        >
+                                            <span aria-hidden="true"
+                                                >&raquo;</span
+                                            >
+                                        </a>
+                                    </li>
+                                </th:block>
+                            </th:block>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            onload = () => {
+                document.getElementById("searchButton").onclick =
+                    submitSearchQuery;
+
+                document.getElementById("searchQuery").onkeydown = (event) => {
+                    if (event.key === "Enter") {
+                        submitSearchQuery();
+                    }
+                };
+            };
+
+            function submitSearchQuery() {
+                const url = new URL(location.toString());
+
+                const searchQuery =
+                    document.getElementById("searchQuery").value;
+
+                if (searchQuery) {
+                    url.searchParams.set("searchQuery", searchQuery);
+                } else {
+                    url.searchParams.delete("searchQuery");
+                }
+
+                window.location.href = url.toString();
+            }
+        </script>
+    </body>
+</html>
