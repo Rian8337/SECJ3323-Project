@@ -92,7 +92,7 @@
                                 <option
                                     th:each="category : ${categories}"
                                     th:value="${category.name().toLowerCase()}"
-                                    th:text="${category.toString()}"
+                                    th:text="${category}"
                                     th:selected="${selectedCategory.equalsIgnoreCase(category.name())}"
                                 ></option>
                             </select>
