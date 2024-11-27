@@ -84,8 +84,8 @@ public class LibraryController {
 
     @GetMapping("/upload")
     public String getUploadForm(final Model model) {
-        if (!model.containsAttribute("message")) {
-            model.addAttribute("message", "");
+        if (!model.containsAttribute("toastMessage")) {
+            model.addAttribute("toastMessage", "");
         }
 
         model.addAttribute("link", "");
@@ -100,12 +100,12 @@ public class LibraryController {
     public String postUploadContent(final Model model, @RequestBody MultiValueMap<String, String> formData,
             RedirectAttributes redirectAttributes) {
         if (!formData.containsKey("link") || formData.getFirst("link").isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Please provide a valid YouTube video link.");
+            redirectAttributes.addFlashAttribute("toastMessage", "Please provide a valid YouTube video link.");
             return "redirect:/library/upload";
         }
 
         if (!formData.containsKey("category") || formData.getFirst("category").isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Please provide a valid category.");
+            redirectAttributes.addFlashAttribute("toastMessage", "Please provide a valid category.");
             return "redirect:/library/upload";
         }
 

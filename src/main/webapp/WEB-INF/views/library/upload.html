@@ -103,7 +103,7 @@
                         </button>
                     </form>
 
-                    <th:block th:if="${!message.isEmpty()}">
+                    <th:block th:if="${!toastMessage.isEmpty()}">
                         <div
                             class="toast-container position-absolute top-0 start-50 translate-middle-x"
                         >
@@ -144,7 +144,7 @@
 
                                 <div
                                     class="toast-body"
-                                    th:text="${message}"
+                                    th:text="${toastMessage}"
                                 ></div>
                             </div>
                         </div>
