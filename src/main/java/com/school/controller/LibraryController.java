@@ -119,7 +119,8 @@ public class LibraryController {
         content.setUploadedDate(new Date());
 
         contents.add(content);
+        model.addAttribute("content", content);
 
-        return "redirect:/library/contents";
+        return "library/uploadSuccess";
     }
 }
