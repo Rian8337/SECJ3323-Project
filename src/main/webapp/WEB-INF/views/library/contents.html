@@ -79,7 +79,11 @@
                     <hr />
 
                     <th:block th:each="item : ${items}">
-                        <div class="row align-items-center">
+                        <a
+                            th:id="${'item-' + item.id}"
+                            th:href="@{'viewContent?id=' + ${item.id}}"
+                            class="row align-items-center link-underline link-underline-opacity-0 text-reset"
+                        >
                             <div class="col-9">
                                 <h4 th:text="${item.title}"></h4>
                                 <p th:text="${item.author}"></p>
@@ -100,7 +104,7 @@
                             </div>
 
                             <div class="col text-center">Thumbnail</div>
-                        </div>
+                        </a>
 
                         <hr />
                     </th:block>
@@ -183,6 +187,16 @@
                         submitSearchQuery();
                     }
                 };
+
+                document.querySelectorAll("[id^=item-]").forEach((item) => {
+                    item.onmouseenter = () => {
+                        item.style.backgroundColor = "#eeeeee";
+                    };
+
+                    item.onmouseleave = () => {
+                        item.style.backgroundColor = "white";
+                    };
+                });
             };
 
             function submitSearchQuery() {

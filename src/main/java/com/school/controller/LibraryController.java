@@ -21,6 +21,8 @@ import com.school.model.Content;
 @Controller
 @RequestMapping("/library")
 public class LibraryController {
+    private static final String videoUrl = "https://www.youtube.com/watch?v=pEfrdAtAmqk";
+
     // Temporary for now, will add actual database later
     private static final ArrayList<Content> contents = new ArrayList<>();
 
@@ -34,6 +36,8 @@ public class LibraryController {
             content.setAuthor("Fadhil Raihan Gunawan");
             content.setCategory(ContentCategory.PROGRAMMING);
             content.setUploadedDate(new Date());
+            content.setViewCount(1000 + i * 100);
+            content.setVideoUrl(videoUrl);
             contents.add(content);
         }
     }
@@ -117,10 +121,36 @@ public class LibraryController {
         content.setAuthor("Dummy author " + (contents.size() + 1));
         content.setCategory(ContentCategory.from(formData.getFirst("category")));
         content.setUploadedDate(new Date());
+        content.setViewCount((contents.size() + 1) * 150);
+        content.setVideoUrl(videoUrl);
 
         contents.add(content);
         model.addAttribute("content", content);
 
         return "library/uploadSuccess";
+    }
+
+    @GetMapping("/viewContent")
+    public String getViewContent(final Model model, @RequestParam String id) {
+        if (id == null || id.isEmpty()) {
+            return "redirect:/library/contents";
+        }
+
+        Content content = null;
+
+        for (Content c : contents) {
+            if (c.getId().equals(id)) {
+                content = c;
+                break;
+            }
+        }
+
+        if (content == null) {
+            return "redirect:/library/contents";
+        }
+
+        model.addAttribute("content", content);
+
+        return "library/viewContent";
     }
 }

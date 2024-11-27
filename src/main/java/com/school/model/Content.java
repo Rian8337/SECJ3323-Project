@@ -13,6 +13,8 @@ public class Content {
     private String author;
     private Date uploadedDate;
     private ContentCategory category;
+    private int viewCount;
+    private String videoUrl;
 
     public String getId() {
         return id;
@@ -52,5 +54,21 @@ public class Content {
 
     public void setCategory(ContentCategory category) {
         this.category = category;
+    }
+
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 }
