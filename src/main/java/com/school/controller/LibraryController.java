@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.school.constants.ContentCategory;
 import com.school.model.Content;
@@ -82,6 +84,10 @@ public class LibraryController {
 
     @GetMapping("/upload")
     public String getUploadForm(final Model model) {
+        if (!model.containsAttribute("message")) {
+            model.addAttribute("message", "");
+        }
+
         model.addAttribute("link", "");
         model.addAttribute("selectedCategory", "");
         model.addAttribute("categories", ContentCategory.values());
@@ -91,12 +97,15 @@ public class LibraryController {
 
     @SuppressWarnings("null")
     @PostMapping(value = "/upload", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String postUploadContent(@RequestBody MultiValueMap<String, String> formData) {
+    public String postUploadContent(final Model model, @RequestBody MultiValueMap<String, String> formData,
+            RedirectAttributes redirectAttributes) {
         if (!formData.containsKey("link") || formData.getFirst("link").isEmpty()) {
+            redirectAttributes.addFlashAttribute("message", "Please provide a valid YouTube video link.");
             return "redirect:/library/upload";
         }
 
         if (!formData.containsKey("category") || formData.getFirst("category").isEmpty()) {
+            redirectAttributes.addFlashAttribute("message", "Please provide a valid category.");
             return "redirect:/library/upload";
         }
 

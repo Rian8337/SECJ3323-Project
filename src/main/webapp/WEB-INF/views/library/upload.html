@@ -102,8 +102,66 @@
                             Upload
                         </button>
                     </form>
+
+                    <th:block th:if="${!message.isEmpty()}">
+                        <div
+                            class="toast-container position-absolute top-0 start-50 translate-middle-x"
+                        >
+                            <div
+                                id="toast"
+                                class="toast"
+                                role="alert"
+                                aria-live="assertive"
+                                aria-atomic="true"
+                            >
+                                <div class="toast-header">
+                                    <svg
+                                        class="rounded me-2"
+                                        width="20"
+                                        height="20"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true"
+                                        preserveAspectRatio="xMidYMid slice"
+                                        focusable="false"
+                                    >
+                                        <rect
+                                            width="100%"
+                                            height="100%"
+                                            fill="#f23838"
+                                        ></rect>
+                                    </svg>
+
+                                    <strong class="me-auto"
+                                        >Upload Failed</strong
+                                    >
+                                    <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="toast"
+                                        aria-label="Close"
+                                    ></button>
+                                </div>
+
+                                <div
+                                    class="toast-body"
+                                    th:text="${message}"
+                                ></div>
+                            </div>
+                        </div>
+                    </th:block>
                 </div>
             </div>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+        <script>
+            onload = () => {
+                const toast = document.getElementById("toast");
+
+                if (toast) {
+                    bootstrap.Toast.getOrCreateInstance(toast).show();
+                }
+            };
+        </script>
     </body>
 </html>
