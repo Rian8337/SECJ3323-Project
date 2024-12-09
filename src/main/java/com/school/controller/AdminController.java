@@ -196,7 +196,7 @@ public class AdminController {
                     user.setPhone(updatedUser.getPhone());
                 });
 
-        return "admin/viewUsers";
+        return "redirect:viewUsers";
     }
 
     // Delete user
