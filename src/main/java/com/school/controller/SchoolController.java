@@ -38,4 +38,3 @@ public class SchoolController {
         return "school/editSchool"; // Returns the name of the view (editSchool.jsp or editSchool.html)
     }
 }
-

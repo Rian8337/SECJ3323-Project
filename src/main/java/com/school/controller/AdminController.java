@@ -97,6 +97,37 @@ public class AdminController {
         return "admin/schoolInfo";
     }
 
+    @GetMapping("/editSchool")
+    public String showEditSchoolForm(@RequestParam("id") String schoolId, Model model) {
+        School school = schools.stream()
+                .filter(s -> s.getSchoolId().equals(schoolId))
+                .findFirst()
+                .orElse(null);
+
+        model.addAttribute("school", school);
+        return "admin/editSchool";
+    }
+
+    @PostMapping("/updateSchool")
+    public String updateSchool(@ModelAttribute School updatedSchool, Model model) {
+        // Find and update the existing school
+        schools.stream()
+                .filter(s -> s.getSchoolId().equals(updatedSchool.getSchoolId()))
+                .findFirst()
+                .ifPresent(school -> {
+                    school.setSchoolName(updatedSchool.getSchoolName());
+                    school.setPrincipalName(updatedSchool.getPrincipalName());
+                    school.setDistrict(updatedSchool.getDistrict());
+                    school.setAddress(updatedSchool.getAddress());
+                    school.setEmail(updatedSchool.getEmail());
+                    school.setPhone(updatedSchool.getPhone());
+                    school.setStatus(updatedSchool.getStatus());
+                });
+
+        // Redirect to newly submitted schools page with updated list
+        return "redirect:newlySubmittedSchools";
+    }
+
     private static List<User> users = new ArrayList<>();
 
     // Initialize with some default users
