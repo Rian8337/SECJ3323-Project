@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.school.constants.ContentCategory;
@@ -48,18 +47,16 @@ public class LibraryController {
     }
 
     @GetMapping("/contents")
-    public ModelAndView getContents(@RequestParam(defaultValue = "") String searchQuery,
-            @RequestParam(defaultValue = "1") Integer page) {
+    public String getContents(@RequestParam(defaultValue = "") String searchQuery,
+            @RequestParam(defaultValue = "1") Integer page, Model model) {
         // Ensure page does not go out of bounds
         page = Math.max(page, 1);
         searchQuery = searchQuery.trim();
 
-        final ModelAndView model = new ModelAndView("library/contents.html");
-
         int contentsPerPage = 20;
 
-        model.addObject("searchQuery", searchQuery);
-        model.addObject("page", page);
+        model.addAttribute("searchQuery", searchQuery);
+        model.addAttribute("page", page);
 
         // Filter contents based on search query
         if (!searchQuery.isEmpty()) {
@@ -77,13 +74,13 @@ public class LibraryController {
                 }
             }
 
-            model.addObject("items", filteredContents);
+            model.addAttribute("items", filteredContents);
         } else {
-            model.addObject("items",
+            model.addAttribute("items",
                     contents.subList((page - 1) * contentsPerPage, Math.min(page * contentsPerPage, contents.size())));
         }
 
-        return model;
+        return "library/contents.html";
     }
 
     @GetMapping("/upload")
