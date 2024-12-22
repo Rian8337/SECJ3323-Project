@@ -44,7 +44,7 @@ public class LibraryController {
 
     @GetMapping
     public String getIndex() {
-        return "library/index";
+        return "library/index.html";
     }
 
     @GetMapping("/contents")
@@ -54,7 +54,7 @@ public class LibraryController {
         page = Math.max(page, 1);
         searchQuery = searchQuery.trim();
 
-        final ModelAndView model = new ModelAndView("library/contents");
+        final ModelAndView model = new ModelAndView("library/contents.html");
 
         int contentsPerPage = 20;
 
@@ -96,7 +96,7 @@ public class LibraryController {
         model.addAttribute("selectedCategory", "");
         model.addAttribute("categories", ContentCategory.values());
 
-        return "library/upload";
+        return "library/upload.html";
     }
 
     @SuppressWarnings("null")
@@ -127,7 +127,7 @@ public class LibraryController {
         contents.add(content);
         model.addAttribute("content", content);
 
-        return "library/uploadSuccess";
+        return "library/uploadSuccess.html";
     }
 
     @GetMapping("/viewContent")
@@ -151,6 +151,6 @@ public class LibraryController {
 
         model.addAttribute("content", content);
 
-        return "library/viewContent";
+        return "library/viewContent.html";
     }
 }
