@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = { "com.school.model, com.school.controller" })
+@ComponentScan(basePackages = { "com.school.entity, com.school.controller" })
 public class HibernateConfig {
     @Bean
     public DataSource dataSource() {
@@ -34,7 +34,7 @@ public class HibernateConfig {
         var sessionFactory = new LocalSessionFactoryBean();
 
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("com.example.entity");
+        sessionFactory.setPackagesToScan("com.school.entity");
 
         var hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
