@@ -1,0 +1,18 @@
+package com.school.constants;
+
+public enum EquipmentType {
+    TV_PROGRAM_SHOW,
+    SMARTPHONE,
+    EXTERNAL_MIC,
+    MONOPOD,
+    RING_LIGHT,
+    EDITING_CORNER,
+    WEBCAM,
+    TRIPOD,
+    MOBILE_LIGHTING,
+    MOBILE_GREEN_SCREEN,
+    OPEN_SOURCE_EDITING_SOFTWARE,
+    CAMERA,
+    GREEN_SCREEN,
+    PROFESSIONAL_EDITING_SOFTWARE;
+}
