@@ -1,8 +1,6 @@
 package com.school.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,34 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.school.constants.ContentCategory;
-import com.school.entity.Content;
 import com.school.entity.User;
+import com.school.service.ContentService;
 
 @Controller
 @RequestMapping("/library")
 public class LibraryController {
-    private static final String videoId = "pEfrdAtAmqk";
-
-    // Temporary for now, will add actual database later
-    private static final ArrayList<Content> contents = new ArrayList<>();
-
-    public LibraryController() {
-        // Add dummy content data
-        for (int i = 0; i < 5; i++) {
-            final var content = new Content();
-            final var user = new User();
-
-            user.setName("Dummy author " + (i + 1));
-
-            content.setId(i + 1);
-            content.setTitle("Introduction to " + (i % 2 == 0 ? "Java" : "Python"));
-            content.setAuthor(user);
-            content.setCategory(ContentCategory.PROGRAMMING);
-            content.setUploadedDate(new Date());
-            content.setVideoId(videoId);
-            contents.add(content);
-        }
-    }
+    @Autowired
+    private ContentService contentService;
 
     @GetMapping
     public String getIndex() {
@@ -56,32 +34,12 @@ public class LibraryController {
         page = Math.max(page, 1);
         searchQuery = searchQuery.trim();
 
-        int contentsPerPage = 20;
+        final int contentsPerPage = 20;
+        final var contents = contentService.searchContents(searchQuery, page, contentsPerPage);
 
+        model.addAttribute("items", contents);
         model.addAttribute("searchQuery", searchQuery);
         model.addAttribute("page", page);
-
-        // Filter contents based on search query
-        if (!searchQuery.isEmpty()) {
-            final var filteredContents = new ArrayList<Content>();
-
-            for (var content : contents) {
-                if (content.getTitle().toLowerCase().contains(searchQuery.toLowerCase())
-                        || content.getAuthor().getName().toLowerCase().contains(searchQuery.toLowerCase())
-                        || content.getCategory().name().toLowerCase().contains(searchQuery.toLowerCase())) {
-                    filteredContents.add(content);
-                }
-
-                if (filteredContents.size() == contentsPerPage) {
-                    break;
-                }
-            }
-
-            model.addAttribute("items", filteredContents);
-        } else {
-            model.addAttribute("items",
-                    contents.subList((page - 1) * contentsPerPage, Math.min(page * contentsPerPage, contents.size())));
-        }
 
         return "library/contents.html";
     }
@@ -113,20 +71,15 @@ public class LibraryController {
             return "redirect:/library/upload";
         }
 
-        // TODO: request YouTube for video information. For now, use dummy data
-        final var content = new Content();
+        // TODO: replace with actual user
         final var user = new User();
+        final var category = ContentCategory.from(formData.getFirst("category"));
 
-        user.setName("Dummy author " + (contents.size() + 1));
+        user.setId(1);
+        user.setName("Hey haha XD");
 
-        content.setId(contents.size() + 1);
-        content.setTitle("Dummy title " + (contents.size() + 1));
-        content.setAuthor(user);
-        content.setCategory(ContentCategory.from(formData.getFirst("category")));
-        content.setUploadedDate(new Date());
-        content.setVideoId(videoId);
+        final var content = contentService.uploadContent(user, "pEfrdAtAmqk", category);
 
-        contents.add(content);
         model.addAttribute("content", content);
 
         return "library/uploadSuccess.html";
@@ -138,14 +91,7 @@ public class LibraryController {
             return "redirect:/library/contents";
         }
 
-        Content content = null;
-
-        for (var c : contents) {
-            if (c.getId() == id) {
-                content = c;
-                break;
-            }
-        }
+        final var content = contentService.getContentById(id);
 
         if (content == null) {
             return "redirect:/library/contents";
