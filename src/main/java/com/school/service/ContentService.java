@@ -39,6 +39,14 @@ public class ContentService {
         return contentDao.getAll();
     }
 
+    public List<Content> getContents(final int page, final int pageSize) {
+        return contentDao.getPaged(page, pageSize);
+    }
+
+    public List<Content> searchContents(final String searchQuery, final int page, final int pageSize) {
+        return contentDao.getSearched(searchQuery, page, pageSize);
+    }
+
     public Content getContentById(final long id) {
         return contentDao.getById(id);
     }

@@ -22,6 +22,24 @@ public class ContentDao {
         }
     }
 
+    public List<Content> getPaged(final int page, final int pageSize) {
+        try (var session = sessionFactory.openSession()) {
+            return session.createQuery("from Content", Content.class).setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .list();
+        }
+    }
+
+    public List<Content> getSearched(final String searchQuery, final int page, final int pageSize) {
+        try (var session = sessionFactory.openSession()) {
+            return session.createQuery("from Content where lower(title) like :searchQuery", Content.class)
+                    .setParameter("searchQuery", searchQuery.toLowerCase() + "%")
+                    .setFirstResult((page - 1) * pageSize)
+                    .setMaxResults(pageSize)
+                    .list();
+        }
+    }
+
     public Content getById(final long id) {
         try (var session = sessionFactory.openSession()) {
             return session.get(Content.class, id);
