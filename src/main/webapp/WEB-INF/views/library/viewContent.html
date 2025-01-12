@@ -88,11 +88,6 @@
                                     th:text="${#dates.format(content.uploadedDate, 'MMM dd, yyyy')}"
                                 ></th:block>
                             </p>
-
-                            <p>
-                                <strong th:text="${content.viewCount}"></strong>
-                                views
-                            </p>
                         </div>
 
                         <div class="col text-center">Thumbnail</div>
@@ -100,7 +95,7 @@
 
                     <a
                         class="btn btn-primary"
-                        th:href="${content.videoUrl}"
+                        th:href="https://youtube.com/watch?v=${content.videoId}"
                         target="_blank"
                     >
                         Watch

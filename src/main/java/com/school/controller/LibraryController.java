@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.school.constants.ContentCategory;
-import com.school.model.Content;
+import com.school.entity.Content;
+import com.school.entity.User;
 
 @Controller
 @RequestMapping("/library")
 public class LibraryController {
-    private static final String videoUrl = "https://www.youtube.com/watch?v=pEfrdAtAmqk";
+    private static final String videoId = "pEfrdAtAmqk";
 
     // Temporary for now, will add actual database later
     private static final ArrayList<Content> contents = new ArrayList<>();
@@ -28,15 +29,17 @@ public class LibraryController {
     public LibraryController() {
         // Add dummy content data
         for (int i = 0; i < 5; i++) {
-            final Content content = new Content();
+            final var content = new Content();
+            final var user = new User();
 
-            content.setId(String.valueOf(i + 1));
+            user.setName("Dummy author " + (i + 1));
+
+            content.setId(i + 1);
             content.setTitle("Introduction to " + (i % 2 == 0 ? "Java" : "Python"));
-            content.setAuthor("Fadhil Raihan Gunawan");
+            content.setAuthor(user);
             content.setCategory(ContentCategory.PROGRAMMING);
             content.setUploadedDate(new Date());
-            content.setViewCount(1000 + i * 100);
-            content.setVideoUrl(videoUrl);
+            content.setVideoId(videoId);
             contents.add(content);
         }
     }
@@ -60,11 +63,11 @@ public class LibraryController {
 
         // Filter contents based on search query
         if (!searchQuery.isEmpty()) {
-            final ArrayList<Content> filteredContents = new ArrayList<>();
+            final var filteredContents = new ArrayList<Content>();
 
-            for (Content content : contents) {
+            for (var content : contents) {
                 if (content.getTitle().toLowerCase().contains(searchQuery.toLowerCase())
-                        || content.getAuthor().toLowerCase().contains(searchQuery.toLowerCase())
+                        || content.getAuthor().getName().toLowerCase().contains(searchQuery.toLowerCase())
                         || content.getCategory().name().toLowerCase().contains(searchQuery.toLowerCase())) {
                     filteredContents.add(content);
                 }
@@ -111,15 +114,17 @@ public class LibraryController {
         }
 
         // TODO: request YouTube for video information. For now, use dummy data
-        final Content content = new Content();
+        final var content = new Content();
+        final var user = new User();
 
-        content.setId(String.valueOf(contents.size() + 1));
+        user.setName("Dummy author " + (contents.size() + 1));
+
+        content.setId(contents.size() + 1);
         content.setTitle("Dummy title " + (contents.size() + 1));
-        content.setAuthor("Dummy author " + (contents.size() + 1));
+        content.setAuthor(user);
         content.setCategory(ContentCategory.from(formData.getFirst("category")));
         content.setUploadedDate(new Date());
-        content.setViewCount((contents.size() + 1) * 150);
-        content.setVideoUrl(videoUrl);
+        content.setVideoId(videoId);
 
         contents.add(content);
         model.addAttribute("content", content);
@@ -128,15 +133,15 @@ public class LibraryController {
     }
 
     @GetMapping("/viewContent")
-    public String getViewContent(final Model model, @RequestParam String id) {
-        if (id == null || id.isEmpty()) {
+    public String getViewContent(final Model model, @RequestParam Long id) {
+        if (id == null) {
             return "redirect:/library/contents";
         }
 
         Content content = null;
 
-        for (Content c : contents) {
-            if (c.getId().equals(id)) {
+        for (var c : contents) {
+            if (c.getId() == id) {
                 content = c;
                 break;
             }
