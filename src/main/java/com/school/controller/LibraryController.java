@@ -61,7 +61,22 @@ public class LibraryController {
     @PostMapping(value = "/upload", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String postUploadContent(final Model model, @RequestBody MultiValueMap<String, String> formData,
             RedirectAttributes redirectAttributes) {
-        if (!formData.containsKey("link") || formData.getFirst("link").isEmpty()) {
+        String videoId = null;
+        final var link = formData.getFirst("link");
+
+        if (link == null || link.isEmpty()) {
+            redirectAttributes.addFlashAttribute("toastMessage", "Please provide a valid YouTube video link.");
+            return "redirect:/library/upload";
+        }
+
+        // Ensure the link is a valid YouTube link
+        if (link.contains("youtube.com/watch?v=")) {
+            videoId = link.split("v=")[1];
+        } else if (link.contains("youtu.be/")) {
+            videoId = link.split("be/")[1];
+        }
+
+        if (videoId == null) {
             redirectAttributes.addFlashAttribute("toastMessage", "Please provide a valid YouTube video link.");
             return "redirect:/library/upload";
         }
@@ -78,8 +93,7 @@ public class LibraryController {
         user.setId(1);
         user.setName("Hey haha XD");
 
-        final var content = contentService.uploadContent(user, "pEfrdAtAmqk", category);
-
+        final var content = contentService.uploadContent(user, videoId, category);
         model.addAttribute("content", content);
 
         return "library/uploadSuccess.html";
