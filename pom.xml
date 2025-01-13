@@ -91,6 +91,14 @@
             <artifactId>spring-security-config</artifactId>
             <version>5.3.13.RELEASE</version>
         </dependency>
+
+        <!-- Okhttp for HTTP requests -->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.12.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
