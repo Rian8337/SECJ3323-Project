@@ -5,5 +5,6 @@ public enum AuthorityType {
     JPNJ,
     STUDENT,
     TEACHER,
-    ADMINISTRATOR;
+    SCHOOL_ADMINISTRATOR,
+    SYSTEM_ADMINISTRATOR;
 }
