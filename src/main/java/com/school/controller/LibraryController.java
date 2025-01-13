@@ -57,12 +57,11 @@ public class LibraryController {
         return "library/upload.html";
     }
 
-    @SuppressWarnings("null")
     @PostMapping(value = "/upload", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String postUploadContent(final Model model, @RequestBody MultiValueMap<String, String> formData,
             RedirectAttributes redirectAttributes) {
-        String videoId = null;
         final var link = formData.getFirst("link");
+        final var categoryStr = formData.getFirst("category");
 
         if (link == null || link.isEmpty()) {
             redirectAttributes.addFlashAttribute("toastMessage", "Please provide a valid YouTube video link.");
@@ -70,6 +69,8 @@ public class LibraryController {
         }
 
         // Ensure the link is a valid YouTube link
+        String videoId = null;
+
         if (link.contains("youtube.com/watch?v=")) {
             videoId = link.split("v=")[1];
         } else if (link.contains("youtu.be/")) {
@@ -81,14 +82,14 @@ public class LibraryController {
             return "redirect:/library/upload";
         }
 
-        if (!formData.containsKey("category") || formData.getFirst("category").isEmpty()) {
+        if (categoryStr == null || categoryStr.isEmpty()) {
             redirectAttributes.addFlashAttribute("toastMessage", "Please provide a valid category.");
             return "redirect:/library/upload";
         }
 
         // TODO: replace with actual user
         final var user = new User();
-        final var category = ContentCategory.from(formData.getFirst("category"));
+        final var category = ContentCategory.from(categoryStr);
 
         user.setId(1);
         user.setName("Hey haha XD");
