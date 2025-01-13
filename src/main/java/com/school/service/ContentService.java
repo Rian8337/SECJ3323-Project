@@ -61,6 +61,10 @@ public class ContentService {
     }
 
     public List<Content> searchContents(final String searchQuery, final int page, final int pageSize) {
+        if (searchQuery == null || searchQuery.isBlank()) {
+            return getContents(page, pageSize);
+        }
+
         return contentDao.getSearched(searchQuery, page, pageSize);
     }
 
