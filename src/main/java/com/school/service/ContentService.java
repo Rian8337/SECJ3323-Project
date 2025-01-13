@@ -12,6 +12,7 @@ import com.school.constants.ContentCategory;
 import com.school.entity.Content;
 import com.school.entity.User;
 import com.school.repository.ContentDao;
+import com.school.rest.JSONObjectWebRequest;
 
 @Service
 public class ContentService {
@@ -19,20 +20,36 @@ public class ContentService {
     private ContentDao contentDao;
 
     @Transactional
-    public Content uploadContent(final User user, final String videoId, final ContentCategory category) {
-        // TODO: request YouTube for video information. For now, use dummy data
-        final var content = new Content();
+    public Content uploadContent(final User user, final String videoId, final ContentCategory category)
+            throws Exception {
+        // API reference: https://developers.google.com/youtube/v3/docs/videos/list
+        try (var request = new JSONObjectWebRequest("https://www.googleapis.com/youtube/v3/videos")) {
+            request.buildUrl(url -> url
+                    .addQueryParameter("part", "snippet")
+                    .addQueryParameter("id", videoId)
+                    .addQueryParameter("key", System.getenv("YOUTUBE_API_KEY")));
 
-        content.setAuthor(user);
-        content.setTitle("Introduction to " + category);
-        content.setVideoId(videoId);
-        content.setCategory(category);
-        content.setUploadedDate(new Date());
-        content.setVideoId(videoId);
+            final var response = request.execute();
 
-        contentDao.save(content);
+            if (!response.has("items") || response.getJSONArray("items").length() == 0) {
+                return null;
+            }
 
-        return content;
+            final var item = response.getJSONArray("items").getJSONObject(0);
+            final var snippet = item.getJSONObject("snippet");
+            final var content = new Content();
+
+            content.setAuthor(user);
+            content.setTitle(snippet.getString("title"));
+            content.setVideoId(videoId);
+            content.setCategory(category);
+            content.setUploadedDate(new Date());
+            content.setVideoId(videoId);
+
+            contentDao.save(content);
+
+            return content;
+        }
     }
 
     public List<Content> getContents() {

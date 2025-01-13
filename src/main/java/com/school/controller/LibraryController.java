@@ -94,10 +94,15 @@ public class LibraryController {
         user.setId(1);
         user.setName("Hey haha XD");
 
-        final var content = contentService.uploadContent(user, videoId, category);
-        model.addAttribute("content", content);
+        try {
+            final var content = contentService.uploadContent(user, videoId, category);
+            model.addAttribute("content", content);
 
-        return "library/uploadSuccess.html";
+            return "library/uploadSuccess.html";
+        } catch (Exception e) {
+            model.addAttribute("toastMessage", "An error occurred while uploading the content.");
+            return "redirect:/library/upload";
+        }
     }
 
     @GetMapping("/viewContent")
