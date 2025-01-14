@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,7 +65,8 @@ public class School {
     private Date admissionDate;
 
     @Column(name = "verification_status", nullable = false)
-    private SchoolVerificationStatus verificationStatus = SchoolVerificationStatus.PENDING;
+    @Enumerated
+    private SchoolVerificationStatus verificationStatus;
 
     @OneToOne
     @JoinColumn(name = "admin_id", nullable = false, unique = true)

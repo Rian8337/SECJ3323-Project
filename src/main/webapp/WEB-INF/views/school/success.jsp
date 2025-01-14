@@ -166,19 +166,12 @@ form button:hover {
                 </div>
 
                 <div class="button-container">
-                    <button class="btn btn-primary" onclick="cancelOperation()">
-                        return
-                    </button>
+                    <a class="btn btn-primary" href="../admin">
+                        Return
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-
-        function cancelOperation() {
-            window.location.href = ' ';
-        }
-    </script>
 </body>
 </html>

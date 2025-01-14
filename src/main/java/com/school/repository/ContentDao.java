@@ -2,8 +2,6 @@ package com.school.repository;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -57,31 +55,35 @@ public class ContentDao {
         }
     }
 
-    @Transactional
     public void save(final Content content) {
         try (var session = sessionFactory.openSession()) {
+            final var transaction = session.beginTransaction();
             session.save(content);
+            transaction.commit();
         }
     }
 
-    @Transactional
     public void update(final Content content) {
         try (var session = sessionFactory.openSession()) {
+            final var transaction = session.beginTransaction();
             session.update(content);
+            transaction.commit();
         }
     }
 
-    @Transactional
     public void delete(final Content content) {
         try (var session = sessionFactory.openSession()) {
+            final var transaction = session.beginTransaction();
             session.delete(content);
+            transaction.commit();
         }
     }
 
-    @Transactional
     public void delete(final long id) {
         try (var session = sessionFactory.openSession()) {
+            final var transaction = session.beginTransaction();
             session.createQuery("delete from Content where id = :id").setParameter("id", id).executeUpdate();
+            transaction.commit();
         }
     }
 }

@@ -66,11 +66,7 @@
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>School Name</th>
-                                        <td>${school.schoolName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Principal Name</th>
-                                        <td>${school.principalName}</td>
+                                        <td>${school.name}</td>
                                     </tr>
                                     <tr>
                                         <th>District</th>

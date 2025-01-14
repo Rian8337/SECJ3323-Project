@@ -48,11 +48,7 @@
                     <table class="table table-bordered">
                         <tr>
                             <th>School Name</th>
-                            <td>${school.schoolName}</td>
-                        </tr>
-                        <tr>
-                            <th>Principal Name</th>
-                            <td>${school.principalName}</td>
+                            <td>${school.name}</td>
                         </tr>
                         <tr>
                             <th>District</th>
@@ -78,25 +74,11 @@
                             <th>Status</th>
                             <td>
                                 <span class="badge 
-                                    ${school.status == 'Verified' ? 'bg-success' : 
-                                      school.status == 'Pending' ? 'bg-warning text-dark' : 
-                                      'bg-danger'}">
-                                    ${school.status}
+                                    ${school.verificationStatus == 'VERIFIED' ? 'bg-success' : 
+                                        school.verificationStatus == 'PENDING' ? 'bg-warning text-dark' : 
+                                        'bg-danger'}">
+                                    ${school.verificationStatus}
                                 </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>School ID</th>
-                            <td>${school.schoolId}</td>
-                        </tr>
-                        <tr>
-                            <th>Video</th>
-                            <td>
-                                <div>
-                                    <img src="https://img.youtube.com/vi/${school.video.videoUrl.split('=')[1]}/hqdefault.jpg" alt="Video Thumbnail" width="150">
-                                    <p>Created by: ${school.video.studentName}</p>
-                                    <a href="${school.video.videoUrl}" target="_blank">Watch Video</a>
-                                </div>
                             </td>
                         </tr>
                     </table>
@@ -105,12 +87,12 @@
                 <!-- Back and Update Buttons -->
                 <div class="mt-3">
                     <form action="verifySchool" method="post" style="display: inline;">
-                        <input type="hidden" name="id" value="${school.schoolId}">
+                        <input type="hidden" name="id" value="${school.id}">
                         <input type="hidden" name="action" value="accept">
                         <button type="submit" class="btn btn-success me-2">Accept</button>
                     </form>
                     <form action="verifySchool" method="post" style="display: inline;">
-                        <input type="hidden" name="id" value="${school.schoolId}">
+                        <input type="hidden" name="id" value="${school.id}">
                         <input type="hidden" name="action" value="reject">
                         <button type="submit" class="btn btn-danger">Reject</button>
                     </form>

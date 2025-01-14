@@ -81,29 +81,25 @@
                                 <th>District</th>
                                 <th>Status</th>
                                 <th>Equipment Level</th>
-                                <th>Total Students</th>
-                                <th>Total Videos</th>
                                 <th>View</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach var="school" items="${schools}">
                                 <tr>
-                                    <td>${school.schoolName}</td>
+                                    <td>${school.name}</td>
                                     <td>${school.district}</td>
                                     <td>
                                         <span class="badge 
-                                            ${school.status == 'VERIFIED' ? 'bg-success' : 
-                                              school.status == 'PENDING' ? 'bg-warning text-dark' : 
+                                            ${school.verificationStatus == 'VERIFIED' ? 'bg-success' : 
+                                              school.verificationStatus == 'PENDING' ? 'bg-warning text-dark' : 
                                               'bg-danger'}">
-                                            ${school.status}
+                                            ${school.verificationStatus}
                                         </span>
                                     </td>
                                     <td>${school.equipmentLevel}</td>
-                                    <td>${school.totalStudents}</td>
-                                    <td>${school.totalVideos}</td>
                                     <td>
-                                        <a href="schoolInfo?id=${school.schoolId}" class="btn btn-link">View</a>
+                                        <a href="schoolInfo?id=${school.id}" class="btn btn-link">View</a>
                                     </td>
                                 </tr>
                             </c:forEach>

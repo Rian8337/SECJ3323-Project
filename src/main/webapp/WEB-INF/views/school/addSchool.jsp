@@ -169,7 +169,7 @@ form button:hover {
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label">School Name *</label>
-                                <input type="text" class="form-control" name="schoolName" required>
+                                <input type="text" class="form-control" name="name" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Phone *</label>
@@ -196,13 +196,6 @@ form button:hover {
                             <div class="col-md-6">
                                 <label class="form-label">Board of Province *</label>
                                 <input type="text" class="form-control" name="boardOfProvince" required>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label">Student Count *</label>
-                                <input type="number" class="form-control" name="studentCount" required>
                             </div>
                         </div>
 

@@ -4,17 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.school.repository.SchoolInformationDAO;
-import com.school.constants.SchoolVerificationStatus;
-import com.school.model.School;
-import java.util.List;
+
+import com.school.repository.SchoolDao;
+import com.school.service.SchoolService;
 
 @Controller
 @RequestMapping("/jpnj")
 public class JPNJController {
-    
     @Autowired
-    private SchoolInformationDAO schoolInformationDAO;
+    private SchoolDao schoolDao;
+
+    @Autowired
+    private SchoolService schoolService;
 
     @GetMapping("/home")
     public String showJPNJDashboard() {
@@ -23,25 +24,21 @@ public class JPNJController {
 
     @GetMapping("/newlySubmittedSchools")
     public String showNewlySubmittedSchools(Model model) {
-        List<School> schools = schoolInformationDAO.getNewlySubmittedSchools();
-        model.addAttribute("schools", schools);
+        model.addAttribute("schools", schoolDao.getAll());
         return "jpnj/newlySubmittedSchools";
     }
 
     @GetMapping("/schoolInfo")
-    public String showSchoolInfo(@RequestParam("id") String schoolId, Model model) {
-        School school = schoolInformationDAO.findBySchoolId(schoolId);
-        model.addAttribute("school", school);
+    public String showSchoolInfo(@RequestParam("id") Long schoolId, Model model) {
+        model.addAttribute("school", schoolDao.getById(schoolId));
         return "jpnj/schoolInfo";
     }
 
     @PostMapping("/verifySchool")
-    public String verifySchool(@RequestParam("id") String schoolId, 
-                             @RequestParam("action") String action) {
-        SchoolVerificationStatus status = action.equals("accept") ? 
-            SchoolVerificationStatus.VERIFIED : SchoolVerificationStatus.REJECTED;
-            
-        schoolInformationDAO.updateSchoolStatus(schoolId, status.toString());
+    public String verifySchool(@RequestParam("id") Long schoolId,
+            @RequestParam("action") String action) {
+        schoolService.updateSchoolStatus(schoolId, action.equals("accept"));
+
         return "redirect:/jpnj/newlySubmittedSchools";
     }
 }
