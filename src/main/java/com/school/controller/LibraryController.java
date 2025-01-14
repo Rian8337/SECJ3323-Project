@@ -96,6 +96,12 @@ public class LibraryController {
 
         try {
             final var content = contentService.uploadContent(user, videoId, category);
+
+            if (content == null) {
+                redirectAttributes.addFlashAttribute("toastMessage", "Content not found.");
+                return "redirect:/library/upload";
+            }
+
             model.addAttribute("content", content);
 
             return "library/uploadSuccess.html";
