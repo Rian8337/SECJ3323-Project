@@ -60,7 +60,10 @@
                     <h1 class="text-success">Upload Successful</h1>
 
                     <h2 th:text="${content.title}"></h2>
-                    <p>By <th:block th:text="${content.author}"></th:block></p>
+                    <p>
+                        By
+                        <th:block th:text="${content.author.name}"></th:block>
+                    </p>
                     <p>
                         <strong>Category: </strong>
                         <th:block th:text="${content.category}"></th:block>
