@@ -2,6 +2,7 @@ package com.school.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,15 +11,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.school.model.School;
-import com.school.model.Video;
 import com.school.model.User;
+import com.school.model.Video;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    
+
     @GetMapping
     public String showAdminDashboard() {
         return "admin/adminDashboard"; // This must match the name of your HTML template
@@ -45,7 +47,7 @@ public class AdminController {
         // Add your logic to save the school information
         return "school/success"; // This will show the success page
     }
-    
+
     private static List<School> schools = new ArrayList<>();
 
     static {
@@ -189,7 +191,7 @@ public class AdminController {
         return "admin/viewUsers"; // View the list of users
     }
 
-    // Edit user
+ // Show Edit User Form (GET request)
     @GetMapping("/editUser")
     public String showEditUserForm(@RequestParam("id") String userId, Model model) {
         User user = users.stream()
@@ -198,28 +200,40 @@ public class AdminController {
                 .orElse(null);
 
         model.addAttribute("user", user);
-        return "admin/editUser"; // Form to edit user details
+        return "admin/editUser"; // Rendering the edit user form
     }
 
-    @PostMapping("/updateUser")
-    public String updateUser(@ModelAttribute User updatedUser, Model model) {
-        users.stream()
-                .filter(u -> u.getId().equals(updatedUser.getId()))
+    // Handle Edit User Form submission (POST request)
+    @PostMapping("/editUser")
+    public String updateUser(@RequestParam("id") String userId, 
+                             @RequestParam("name") String name,
+                             @RequestParam("institution") String institution,
+                             @RequestParam("email") String email,
+                             @RequestParam("phone") String phone) {
+        User user = users.stream()
+                .filter(u -> u.getId().equals(userId))
                 .findFirst()
-                .ifPresent(user -> {
-                    user.setName(updatedUser.getName());
-                    user.setInstitution(updatedUser.getInstitution());
-                    user.setEmail(updatedUser.getEmail());
-                    user.setPhone(updatedUser.getPhone());
-                });
+                .orElse(null);
+        
+        if (user != null) {
+            // Update the user fields
+            user.setName(name);
+            user.setInstitution(institution);
+            user.setEmail(email);
+            user.setPhone(phone);
+        }
 
-        return "redirect:viewUsers";
+        // Redirect to the viewUser page after updating
+        return "redirect:/admin/viewUser?id=" + userId;
     }
+
+   
+
 
     // Delete user
     @GetMapping("/deleteUser")
     public String deleteUser(@RequestParam("id") String userId, Model model) {
         users.removeIf(u -> u.getId().equals(userId));
-        return "admin/viewUsers"; // Redirect to user list after deletion
+        return "redirect:/admin/viewUsers"; // Redirect to user list after deletion
     }
 }
