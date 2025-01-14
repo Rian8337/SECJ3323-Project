@@ -62,4 +62,21 @@ public class SchoolDao {
             transaction.commit();
         }
     }
+    
+    public List<School> searchBySchoolName(String keyword) { //edited
+        try (var session = sessionFactory.openSession()) {
+            return session.createQuery("from School where lower(schoolName) like :keyword", School.class) //edited
+                    .setParameter("keyword", "%" + keyword.toLowerCase() + "%") //edited
+                    .list();
+        }
+    }
+
+    public List<School> filterByStatus(String status) { //edited
+        try (var session = sessionFactory.openSession()) {
+            return session.createQuery("from School where status = :status", School.class) //edited
+                    .setParameter("status", status)
+                    .list();
+        }
+    }
+
 }

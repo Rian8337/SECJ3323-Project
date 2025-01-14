@@ -1,6 +1,8 @@
 package com.school.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.school.repository.UserDao;
 import com.school.constants.SchoolVerificationStatus;
+import com.school.entity.User;
 
 @Controller
 @RequestMapping("/school")
@@ -19,16 +22,22 @@ public class SchoolController {
 
     @GetMapping("/welcome")
     public String showWelcome(Model model) {
-        final var user = userDao.getByEmail(email);
-        final var school = user.getSchool();
+    	 // Get authenticated user
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName(); // Fetch the currently logged-in user's email
 
-        if (school != null && school.getVerificationStatus() == SchoolVerificationStatus.VERIFIED) {
-            model.addAttribute("school", school);
-            model.addAttribute("hasVerifiedSchool", true);
+        User user = userDao.getByEmail(email);
+        if (user != null && user.getSchool() != null) {
+            var school = user.getSchool();
+            if (school.getVerificationStatus() == SchoolVerificationStatus.VERIFIED) {
+                model.addAttribute("school", school);
+                model.addAttribute("hasVerifiedSchool", true);
+            } else {
+                model.addAttribute("hasVerifiedSchool", false);
+            }
         } else {
             model.addAttribute("hasVerifiedSchool", false);
         }
-
         return "school/welcome";
     }
 
