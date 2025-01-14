@@ -224,7 +224,7 @@ public class AdminController {
         }
 
         // Redirect to the viewUser page after updating
-        return "redirect:/admin/viewUser?id=" + userId;
+        return "redirect:/admin/viewUsers";
     }
 
    

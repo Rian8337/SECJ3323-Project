@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Johor TV PSS Management Information System</title>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -80,9 +84,43 @@
         a:hover {
             text-decoration: underline;
         }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #0066cc;
+        }
+
+        .navbar-nav .nav-link {
+            color: white;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ff5722;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Navbar with Sign Up and Login buttons -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white" href="#">Johor TV PSS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/school-info-system/register">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/school-info-system/login">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <h2>Johor TV PSS Management Information System</h2>
 
@@ -104,8 +142,6 @@
                 <li class="list-item">Providing guidance and support to schools in the construction, evaluation, and selection of appropriate materials for T&L and in the management and use of school resource centers.</li>
             </ul>
         </div>
-
-       
 
         <div class="section">
             <h3 class="section-title">Introduction to TV PSS</h3>
@@ -154,5 +190,7 @@
             </ul>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

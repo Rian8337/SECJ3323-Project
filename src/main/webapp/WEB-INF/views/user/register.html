@@ -1,73 +1,136 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-        />
-        <title>Registration</title>
-    </head>
-    <body>
-        <h1>User Registration</h1>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
+    <title>Registration</title>
+    <style>
+        body {
+            background-color: #e9f7fd;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .form-control {
+            border-radius: 0.375rem;
+        }
+        .btn-custom {
+            background-color: #ff6f61;
+            color: white;
+            border-radius: 0.375rem;
+        }
+        .btn-custom:hover {
+            background-color: #ff4d42;
+        }
+        .alert {
+            font-size: 14px;
+        }
+        .welcome-message {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 40px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.1rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
 
-        <!-- Display Error Messages -->
-        <div th:if="${error != null}" style="color: red">
-            <p th:text="${error}"></p>
-        </div>
+<div class="container">
+    <div class="welcome-message">
+        <p>Welcome to Johor TVPSS!</p>
+    </div>
 
-        <!-- Registration Form -->
-        <form action="register" method="post">
-            <!-- CSRF token -->
-            <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
+    <h1>User Registration</h1>
 
-            <label for="email">Email:</label>
+    <!-- Display Error Messages -->
+    <div th:if="${error != null}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+    </div>
 
+    <!-- Registration Form -->
+    <form action="register" method="post">
+        <!-- CSRF token -->
+        <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
             <input
                 type="email"
                 id="email"
                 name="email"
                 th:value="${email}"
+                class="form-control"
                 required
             />
+        </div>
 
-            <br />
-            <br />
-
-            <label for="name">Name:</label>
-
+        <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
             <input
                 type="text"
                 id="name"
                 name="name"
                 th:value="${name}"
+                class="form-control"
                 required
             />
+        </div>
 
-            <br />
-            <br />
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-control"
+                required
+            />
+        </div>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required />
-
-            <br />
-            <br />
-
-            <label for="confirmPassword">Confirm Password:</label>
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password:</label>
             <input
                 type="password"
                 id="confirmPassword"
                 name="confirmPassword"
+                class="form-control"
                 required
             />
+        </div>
 
-            <br />
-            <br />
-
-            <label for="role">Role:</label>
-
-            <select id="role" name="role" class="form-select" required>
+        <div class="mb-3">
+            <label for="role" class="form-label">Role:</label>
+            <select
+                id="role"
+                name="role"
+                class="form-select"
+                required
+            >
                 <option value="">Select role...</option>
                 <option
                     th:each="role : ${roles}"
@@ -76,16 +139,19 @@
                     th:selected="${selectedRole.equalsIgnoreCase(role.name())}"
                 ></option>
             </select>
+        </div>
 
-            <br />
-            <br />
+        <div class="d-grid">
+            <button type="submit" class="btn btn-custom btn-lg">Register</button>
+        </div>
+    </form>
 
-            <button type="submit">Register</button>
-        </form>
+    <br />
 
-        <br />
+    <!-- Link to Login Page -->
+    <p class="footer">Already have an account? <a th:href="@{/login}">Login here</a></p>
+</div>
 
-        <!-- Link to Login Page -->
-        <p>Already have an account? <a th:href="@{/login}">Login here</a></p>
-    </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
