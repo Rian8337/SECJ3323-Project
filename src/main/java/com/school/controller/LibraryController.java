@@ -16,6 +16,8 @@ import com.school.constants.ContentCategory;
 import com.school.entity.User;
 import com.school.service.ContentService;
 
+import okhttp3.HttpUrl;
+
 @Controller
 @RequestMapping("/library")
 public class LibraryController {
@@ -71,10 +73,22 @@ public class LibraryController {
         // Ensure the link is a valid YouTube link
         String videoId = null;
 
-        if (link.contains("youtube.com/watch?v=")) {
-            videoId = link.split("v=")[1];
-        } else if (link.contains("youtu.be/")) {
-            videoId = link.split("be/")[1];
+        try {
+            var url = HttpUrl.Companion.get(link);
+
+            if (!url.host().contains("youtube.com") && !url.host().contains("youtu.be")) {
+                redirectAttributes.addFlashAttribute("toastMessage", "Please provide a valid YouTube video link.");
+                return "redirect:/library/upload";
+            }
+
+            if (url.host().contains("youtu.be")) {
+                videoId = url.pathSegments().get(url.pathSize() - 1);
+            } else {
+                videoId = url.queryParameter("v");
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("toastMessage", "Please provide a valid YouTube video link.");
+            return "redirect:/library/upload";
         }
 
         if (videoId == null) {
