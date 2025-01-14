@@ -103,7 +103,12 @@
                                 </div>
                             </div>
 
-                            <div class="col text-center">Thumbnail</div>
+                            <div class="col text-center">
+                                <img
+                                    th:src="${'https://img.youtube.com/vi/' + item.videoId + '/default.jpg'}"
+                                    alt="Thumbnail"
+                                />
+                            </div>
                         </a>
 
                         <hr />
