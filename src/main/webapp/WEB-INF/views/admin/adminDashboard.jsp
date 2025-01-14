@@ -164,8 +164,8 @@ form button:hover {
                 <h1>WELCOME, ADMIN..</h1>
 
                 <!-- Newly Submitted Schools Button -->
-                <form action="admin/newlySubmittedSchools" method="get">
-                    <button type="submit" class="btn btn-primary">Newly Submitted Schools</button>
+                <form action="admin/addSchool" method="get">
+                    <button type="submit" class="btn btn-primary">Add Schools</button>
                 </form>
             </div>
         </div>

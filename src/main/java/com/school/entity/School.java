@@ -1,6 +1,7 @@
 package com.school.entity;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.school.constants.AuthorityType;
 import com.school.constants.SchoolVerificationStatus;
@@ -28,39 +36,51 @@ public class School {
     private long id;
 
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "School name is required")
+    @Size(min = 2, max = 100, message = "School name must be between 2 and 100 characters")
     private String name;
 
     @Column(nullable = false, unique = true)
+    @Email(message = "Invalid email format")
+    @NotBlank(message = "Email is required")
     private String email;
 
     @Column(nullable = false, unique = true)
+    @Pattern(regexp = "^\\+?[0-9]{8,15}$", message = "Invalid phone number format")
     private String phone;
 
     @Column(nullable = false)
+    @NotBlank(message = "District is required")
     private String district;
 
     @Column(nullable = false)
+    @NotBlank(message = "Address is required")
+    @Size(min = 5, max = 255, message = "Address must be between 5 and 255 characters")
     private String address;
 
     @Column(name = "admission_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @NotNull(message = "Admission date is required")
     private Date admissionDate;
 
     @Column(name = "verification_status", nullable = false)
-    private SchoolVerificationStatus verificationStatus;
+    private SchoolVerificationStatus verificationStatus = SchoolVerificationStatus.PENDING;
 
     @OneToOne
     @JoinColumn(name = "admin_id", nullable = false, unique = true)
+    @NotNull(message = "School administrator is required")
     private User admin;
 
     @OneToMany(mappedBy = "school", cascade = CascadeType.ALL)
-    private Set<User> members;
+    private Set<User> members = new HashSet<>();
 
     @OneToMany(mappedBy = "school", cascade = CascadeType.ALL)
-    private Set<Equipment> equipments;
+    private Set<Equipment> equipments = new HashSet<>();
 
     @Column(name = "equipment_level", nullable = false)
-    private int equipmentLevel;
+    @Min(value = 1, message = "Equipment level must be at least 1")
+    @Max(value = 3, message = "Equipment level cannot exceed 3")
+    private int equipmentLevel = 1;
 
     public long getId() {
         return id;

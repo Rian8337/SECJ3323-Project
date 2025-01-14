@@ -18,6 +18,7 @@ import com.school.model.User;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    
     @GetMapping
     public String showAdminDashboard() {
         return "admin/adminDashboard"; // This must match the name of your HTML template
@@ -29,6 +30,22 @@ public class AdminController {
         return "admin/newlySubmittedSchools";
     }
 
+    @GetMapping("/addSchool")
+    public String showAddSchoolForm() {
+        return "school/addSchool";
+    }
+
+    @PostMapping("/cancelOperation")
+    public String cancelOperation() {
+        return "redirect:/admin/adminDashboard";
+    }
+
+    @PostMapping("/submitSchool")
+    public String submitSchool(@ModelAttribute School school) {
+        // Add your logic to save the school information
+        return "school/success"; // This will show the success page
+    }
+    
     private static List<School> schools = new ArrayList<>();
 
     static {

@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +17,13 @@
         }
         .status-box {
             margin-top: 50px;
+        }
+        .school-info {
+            margin-top: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
         }
     </style>
 </head>
@@ -50,11 +59,52 @@
                 
                 <div class="status-box">
                     <h3>SCHOOL INFORMATION STATUS:</h3>
-                    <p class="text-danger">NOT SUBMITTED</p>
                     
-                    <form action="addSchool" method="get">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                    <c:choose>
+                        <c:when test="${hasVerifiedSchool}">
+                            <div class="school-info">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>School Name</th>
+                                        <td>${school.schoolName}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Principal Name</th>
+                                        <td>${school.principalName}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>District</th>
+                                        <td>${school.district}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Address</th>
+                                        <td>${school.address}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email</th>
+                                        <td>${school.email}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Phone</th>
+                                        <td>${school.phone}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td>
+                                            <span class="badge bg-success">VERIFIED</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Equipment Level</th>
+                                        <td>${school.equipmentLevel}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <p class="text-warning">No school information available. Please contact your administrator.</p>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
