@@ -25,11 +25,27 @@ public class UserDao {
         }
     }
 
+    public User getByName(final String name) {
+        try (var session = sessionFactory.openSession()) {
+            return session.createQuery("from User where name = :name", User.class)
+                    .setParameter("name", name)
+                    .uniqueResult();
+        }
+    }
+
     public User getByEmail(final String email) {
         try (var session = sessionFactory.openSession()) {
             return session.createQuery("from User where email = :email", User.class)
                     .setParameter("email", email)
                     .uniqueResult();
+        }
+    }
+
+    public void save(User user) {
+        try (var session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.save(user);
+            session.getTransaction().commit();
         }
     }
 }

@@ -22,15 +22,56 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery("SELECT username, password, enabled FROM user WHERE username = ?")
-                .authoritiesByUsernameQuery("SELECT username, authority FROM authority WHERE username = ?");
+                .usersByUsernameQuery("SELECT name, password, enabled FROM user WHERE name = ?")
+                .authoritiesByUsernameQuery(
+                        "SELECT user.name, authority.type FROM authority INNER JOIN user ON user.id = authority.user_id WHERE authority.user_id = (SELECT id FROM user WHERE name = ?)");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests(auth -> {
             try {
-                auth.antMatchers("/**").permitAll();
+                auth.antMatchers("/admin/**").authenticated()
+                        .antMatchers("/jpnj/**").authenticated()
+                        .antMatchers("/library/**").authenticated()
+                        .antMatchers("/school/**").authenticated()
+                        .anyRequest().permitAll()
+                        .and()
+                        .formLogin(login -> login.successHandler((request, response, servletAuth) -> {
+                            for (final var authority : servletAuth.getAuthorities()) {
+                                switch (authority.getAuthority()) {
+                                    case "PPD":
+                                        response.sendRedirect("/ppd");
+                                        break;
+
+                                    case "JPNJ":
+                                        response.sendRedirect("/jpnj");
+                                        break;
+
+                                    case "STUDENT":
+                                        response.sendRedirect("/student");
+                                        break;
+
+                                    case "TEACHER":
+                                        response.sendRedirect("/teacher");
+                                        break;
+
+                                    case "SCHOOL_ADMINISTRATOR":
+                                        response.sendRedirect("/school-admin");
+                                        break;
+
+                                    case "SYSTEM_ADMINISTRATOR":
+                                        response.sendRedirect("/system-admin");
+                                        break;
+
+                                    default:
+                                        response.sendRedirect("/");
+                                        break;
+                                }
+                            }
+                        }).permitAll())
+                        .logout(logout -> logout.logoutUrl("/logout").permitAll())
+                        .csrf(csrf -> csrf.disable());
             } catch (Exception e) {
                 e.printStackTrace();
             }
