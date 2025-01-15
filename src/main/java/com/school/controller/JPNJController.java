@@ -24,7 +24,7 @@ public class JPNJController {
 
     @GetMapping("/newlySubmittedSchools")
     public String showNewlySubmittedSchools(Model model) {
-        model.addAttribute("schools", schoolDao.getAll());
+        model.addAttribute("schools", schoolDao.getPendingSchools());
         return "jpnj/newlySubmittedSchools";
     }
 
