@@ -2,6 +2,7 @@ package com.school.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -47,6 +48,7 @@ public class LibraryController {
     }
 
     @GetMapping("/upload")
+    @Secured("STUDENT")
     public String getUploadForm(final Model model) {
         if (!model.containsAttribute("toastMessage")) {
             model.addAttribute("toastMessage", "");
@@ -60,6 +62,7 @@ public class LibraryController {
     }
 
     @PostMapping(value = "/upload", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @Secured("STUDENT")
     public String postUploadContent(final Model model, @RequestBody MultiValueMap<String, String> formData,
             RedirectAttributes redirectAttributes) {
         final var link = formData.getFirst("link");
