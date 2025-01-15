@@ -63,8 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 }
                             }
                         }).permitAll())
-                        .logout(logout -> logout.logoutUrl("/logout").permitAll())
-                        .csrf(csrf -> csrf.disable());
+                        .logout(logout -> logout.logoutUrl("/logout").permitAll());
             } catch (Exception e) {
                 e.printStackTrace();
             }
