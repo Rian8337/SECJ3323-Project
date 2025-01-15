@@ -41,27 +41,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             for (final var authority : servletAuth.getAuthorities()) {
                                 switch (authority.getAuthority()) {
                                     case "PPD":
-                                        response.sendRedirect("/ppd");
-                                        break;
-
                                     case "JPNJ":
-                                        response.sendRedirect("/jpnj");
+                                        response.sendRedirect("/jpnj/home");
                                         break;
 
                                     case "STUDENT":
-                                        response.sendRedirect("/student");
-                                        break;
-
                                     case "TEACHER":
-                                        response.sendRedirect("/teacher");
+                                        response.sendRedirect("/school/welcome");
                                         break;
 
                                     case "SCHOOL_ADMINISTRATOR":
-                                        response.sendRedirect("/school-admin");
-                                        break;
-
                                     case "SYSTEM_ADMINISTRATOR":
-                                        response.sendRedirect("/system-admin");
+                                        response.sendRedirect("/admin/adminDashboard");
                                         break;
 
                                     default:
