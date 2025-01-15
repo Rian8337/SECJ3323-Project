@@ -165,7 +165,7 @@
 
                 <!-- Newly Submitted Schools Button -->
                 <form action="admin/addSchool" method="get">
-                    <button type="submit" class="btn btn-primary">Add Schools</button>
+                    <button type="submit" class="btn btn-primary">Add School</button>
                 </form>
                 <!-- New View Schools Button Added --> <!-- edited -->
                 <form action="${pageContext.request.contextPath}/admin/newlySubmittedSchools" method="get"> <!-- edited -->

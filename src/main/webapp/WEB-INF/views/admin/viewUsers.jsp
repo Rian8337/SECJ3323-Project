@@ -82,9 +82,7 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Institution</th>
                     <th>Email</th>
-                    <th>Phone</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -92,9 +90,7 @@
                 <c:forEach var="user" items="${users}">
                     <tr>
                         <td>${user.name}</td>
-                        <td>${user.institution}</td>
                         <td>${user.email}</td>
-                        <td>${user.phone}</td>
                         <td>
                             <a href="editUser?id=${user.id}" class="btn btn-warning">Edit</a>
                             <a href="deleteUser?id=${user.id}" class="btn btn-danger">Delete</a>

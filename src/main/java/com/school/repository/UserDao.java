@@ -41,10 +41,27 @@ public class UserDao {
         }
     }
 
-    public void save(User user) {
+    public void save(final User user) {
         try (var session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.save(user);
+            session.getTransaction().commit();
+        }
+    }
+
+    public void update(final User user) {
+        try (var session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.update(user);
+            session.getTransaction().commit();
+        }
+    }
+
+    public void delete(final long id) {
+        try (var session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            final var user = session.get(User.class, id);
+            session.delete(user);
             session.getTransaction().commit();
         }
     }

@@ -39,16 +39,12 @@
 
                 <!-- Form for updating school -->
                 <form:form id="editSchoolForm" action="updateSchool" method="post" modelAttribute="school">
-                    <input type="hidden" name="schoolId" value="${school.schoolId}">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <input type="hidden" name="id" value="${school.id}">
                     
                     <div class="mb-3">
-                        <label class="form-label">School Name</label>
-                        <input type="text" class="form-control" name="schoolName" value="${school.schoolName}" required>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label class="form-label">Principal Name</label>
-                        <input type="text" class="form-control" name="principalName" value="${school.principalName}" required>
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" value="${school.name}" required>
                     </div>
                     
                     <div class="mb-3">
@@ -79,9 +75,9 @@
                     <div class="mb-3">
                         <label class="form-label">Status</label>
                         <select class="form-control" name="status">
-                            <option value="Verified" ${school.status == 'Verified' ? 'selected' : ''}>Verified</option>
-                            <option value="Pending" ${school.status == 'Pending' ? 'selected' : ''}>Pending</option>
-                            <option value="Rejected" ${school.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
+                            <option value="Verified" ${school.verificationStatus == 'VERIFIED' ? 'selected' : ''}>Verified</option>
+                            <option value="Pending" ${school.verificationStatus == 'PENDING' ? 'selected' : ''}>Pending</option>
+                            <option value="Rejected" ${school.verificationStatus == 'REJECTED' ? 'selected' : ''}>Rejected</option>
                         </select>
                     </div>
                     

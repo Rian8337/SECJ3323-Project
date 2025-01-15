@@ -139,7 +139,7 @@ form button:hover {
                 <div class="d-flex flex-column">
                     <a href="#" class="btn btn-light mb-2">Dashboard</a>
                     <a href="#" class="btn btn-light mb-2">Students</a>
-                    <a href="admin/viewUsers" class="btn btn-light mb-2">User Administration</a>
+                    <a href="viewUsers" class="btn btn-light mb-2">User Administration</a>
                     <a href="#" class="btn btn-light mb-2">Teachers</a>
                     <a href="#" class="btn btn-light mb-2">Financial</a>
                     <a href="#" class="btn btn-light mb-2">Contents</a>
@@ -165,7 +165,9 @@ form button:hover {
                 
                 <div class="form-container">
                     <!-- Single Form Starts Here -->
-                    <form action="submitSchool" method="post">
+                    <form action="submitSchool" method="post" modelAttribute="school">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label">School Name *</label>
@@ -179,19 +181,19 @@ form button:hover {
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label class="form-label">Principal Name *</label>
-                                <input type="text" class="form-control" name="principalName" required>
-                            </div>
-                            <div class="col-md-6">
                                 <label class="form-label">Admission Date *</label>
                                 <input type="date" class="form-control" name="admissionDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">District *</label>
+                                <input type="text" class="form-control" name="district" required>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label class="form-label">District *</label>
-                                <input type="text" class="form-control" name="district" required>
+                                <label class="form-label">Email *</label>
+                                <input type="email" class="form-control" name="email" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Board of Province *</label>
@@ -202,11 +204,6 @@ form button:hover {
                         <div class="mb-3">
                             <label class="form-label">Address *</label>
                             <textarea class="form-control" name="address" rows="3" required></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Email *</label>
-                            <input type="email" class="form-control" name="email" required>
                         </div>
 
                         <!-- Equipment Section -->
@@ -283,9 +280,6 @@ form button:hover {
                             </div>
                         </div>
 
-                        <!-- Hidden Field for Equipment Level -->
-                        <input type="hidden" name="equipmentLevel" id="equipmentLevel">
-
                         <!-- Buttons -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button type="reset" class="btn btn-secondary me-md-2">Reset</button>
@@ -296,27 +290,5 @@ form button:hover {
             </div>
         </div>
     </div>
-
-    <script>
-        // Update equipment level based on selected checkboxes
-        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-            checkbox.addEventListener('change', updateEquipmentLevel);
-        });
-
-        function updateEquipmentLevel() {
-            const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
-            let level;
-
-            if (checkedCount <= 4) {
-                level = 1; // Level 1
-            } else if (checkedCount <= 10) {
-                level = 2; // Level 2
-            } else {
-                level = 3; // Level 3
-            }
-
-            document.getElementById('equipmentLevel').value = level;
-        }
-    </script>
 </body>
 </html>

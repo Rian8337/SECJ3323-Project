@@ -24,4 +24,13 @@ public class UserService {
 
         return null;
     }
+
+    public void updateUser(final long id, final String name, final String email) {
+        final var user = userDao.getById(id);
+
+        user.setName(name);
+        user.setEmail(email);
+
+        userDao.update(user);
+    }
 }
