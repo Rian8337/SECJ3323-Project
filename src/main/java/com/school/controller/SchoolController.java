@@ -17,7 +17,7 @@ public class SchoolController {
 
     @GetMapping("/welcome")
     public String showWelcome(Model model) {
-        var user = userService.getCurrentLoggedInUser();
+        final var user = userService.getCurrentLoggedInUser();
 
         if (user != null && user.getSchool() != null) {
             var school = user.getSchool();
