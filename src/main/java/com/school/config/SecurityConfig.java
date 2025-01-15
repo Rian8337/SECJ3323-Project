@@ -42,21 +42,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 switch (authority.getAuthority()) {
                                     case "PPD":
                                     case "JPNJ":
-                                        response.sendRedirect("/jpnj/home");
+                                        response.sendRedirect(request.getContextPath() + "/jpnj/home");
                                         break;
 
                                     case "STUDENT":
                                     case "TEACHER":
-                                        response.sendRedirect("/school/welcome");
+                                        response.sendRedirect(request.getContextPath() + "/school/welcome");
                                         break;
 
                                     case "SCHOOL_ADMINISTRATOR":
                                     case "SYSTEM_ADMINISTRATOR":
-                                        response.sendRedirect("/admin/adminDashboard");
+                                        response.sendRedirect(request.getContextPath() + "/admin");
                                         break;
 
                                     default:
-                                        response.sendRedirect("/");
+                                        response.sendRedirect(request.getContextPath() + "/library");
                                         break;
                                 }
                             }
