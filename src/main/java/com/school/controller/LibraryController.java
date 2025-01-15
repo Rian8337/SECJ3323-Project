@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.school.constants.ContentCategory;
-import com.school.entity.User;
 import com.school.service.ContentService;
+import com.school.service.UserService;
 
 import okhttp3.HttpUrl;
 
@@ -24,6 +24,9 @@ import okhttp3.HttpUrl;
 public class LibraryController {
     @Autowired
     private ContentService contentService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public String getIndex() {
@@ -104,12 +107,14 @@ public class LibraryController {
             return "redirect:/library/upload";
         }
 
-        // TODO: replace with actual user
-        final var user = new User();
-        final var category = ContentCategory.from(categoryStr);
+        final var user = userService.getCurrentLoggedInUser();
 
-        user.setId(1);
-        user.setName("Hey haha XD");
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("toastMessage", "User not found.");
+            return "redirect:/library/upload";
+        }
+
+        final var category = ContentCategory.from(categoryStr);
 
         try {
             final var content = contentService.uploadContent(user, videoId, category);
