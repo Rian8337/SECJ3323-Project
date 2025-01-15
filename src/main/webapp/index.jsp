@@ -112,10 +112,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/school-info-system/register">Sign Up</a>
+                        <a class="nav-link" href="register">Sign Up</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/school-info-system/login">Login</a>
+                        <a class="nav-link" href="login">Login</a>
                     </li>
                 </ul>
             </div>
