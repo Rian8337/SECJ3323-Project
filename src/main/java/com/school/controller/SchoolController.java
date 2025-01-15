@@ -1,32 +1,24 @@
 package com.school.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.school.repository.UserDao;
+import com.school.service.UserService;
 import com.school.constants.SchoolVerificationStatus;
-import com.school.entity.User;
 
 @Controller
 @RequestMapping("/school")
 public class SchoolController {
-    private static final String email = "rezahendrian@graduate.utm.my"; // This would come from authentication
-
     @Autowired
-    private UserDao userDao;
+    private UserService userService;
 
     @GetMapping("/welcome")
     public String showWelcome(Model model) {
-    	 // Get authenticated user
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName(); // Fetch the currently logged-in user's email
+        var user = userService.getCurrentLoggedInUser();
 
-        User user = userDao.getByEmail(email);
         if (user != null && user.getSchool() != null) {
             var school = user.getSchool();
             if (school.getVerificationStatus() == SchoolVerificationStatus.VERIFIED) {
@@ -48,8 +40,8 @@ public class SchoolController {
 
     @GetMapping("/editSchool")
     public String editSchool(Model model) {
-        var user = userDao.getByEmail(email);
-        var school = user.getSchool();
+        final var user = userService.getCurrentLoggedInUser();
+        final var school = user.getSchool();
 
         if (school != null) {
             model.addAttribute("school", school);
