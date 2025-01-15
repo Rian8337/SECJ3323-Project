@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
@@ -43,21 +45,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                     case "PPD":
                                     case "JPNJ":
                                         response.sendRedirect(request.getContextPath() + "/jpnj/home");
-                                        break;
+                                        return;
 
                                     case "STUDENT":
                                     case "TEACHER":
                                         response.sendRedirect(request.getContextPath() + "/school/welcome");
-                                        break;
+                                        return;
 
                                     case "SCHOOL_ADMINISTRATOR":
                                     case "SYSTEM_ADMINISTRATOR":
                                         response.sendRedirect(request.getContextPath() + "/admin");
-                                        break;
+                                        return;
 
                                     default:
                                         response.sendRedirect(request.getContextPath() + "/library");
-                                        break;
+                                        return;
                                 }
                             }
                         }).permitAll())
