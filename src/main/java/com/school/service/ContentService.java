@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.school.config.Config;
 import com.school.constants.ContentCategory;
 import com.school.entity.Content;
 import com.school.entity.User;
@@ -22,12 +23,14 @@ public class ContentService {
     @Transactional
     public Content uploadContent(final User user, final String videoId, final ContentCategory category)
             throws Exception {
+        final var key = Config.getInstance().getYoutubeAPIKey();
+
         // API reference: https://developers.google.com/youtube/v3/docs/videos/list
         try (var request = new JSONObjectWebRequest("https://www.googleapis.com/youtube/v3/videos")) {
             request.buildUrl(url -> url
                     .addQueryParameter("part", "snippet")
                     .addQueryParameter("id", videoId)
-                    .addQueryParameter("key", System.getenv("YOUTUBE_API_KEY")));
+                    .addQueryParameter("key", key));
 
             final var response = request.execute();
 
