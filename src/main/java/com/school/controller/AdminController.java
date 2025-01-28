@@ -60,7 +60,6 @@ public class AdminController {
     @PostMapping("/submitSchool")
     public String submitSchool(final @ModelAttribute School school,
             final @RequestBody MultiValueMap<String, String> formData) {
-        // TODO: asda
         final var user = userService.getCurrentLoggedInUser();
         user.setSchool(school);
 

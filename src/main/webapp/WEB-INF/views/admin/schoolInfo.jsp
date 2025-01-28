@@ -50,11 +50,7 @@
                     <table class="table table-bordered">
                         <tr>
                             <th>School Name</th>
-                            <td>${school.schoolName}</td>
-                        </tr>
-                        <tr>
-                            <th>Principal Name</th>
-                            <td>${school.principalName}</td>
+                            <td>${school.name}</td>
                         </tr>
                         <tr>
                             <th>District</th>
@@ -80,25 +76,11 @@
                             <th>Status</th>
                             <td>
                                 <span class="badge 
-                                    ${school.status == 'Verified' ? 'bg-success' : 
-                                      school.status == 'Pending' ? 'bg-warning text-dark' : 
-                                      'bg-danger'}">
-                                    ${school.status}
+                                    ${school.verificationStatus == 'VERIFIED' ? 'bg-success' : 
+                                        school.verificationStatus == 'PENDING' ? 'bg-warning text-dark' : 
+                                        'bg-danger'}">
+                                    ${school.verificationStatus}
                                 </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>School ID</th>
-                            <td>${school.schoolId}</td>
-                        </tr>
-                        <tr>
-                            <th>Video</th>
-                            <td>
-                                <div>
-                                    <img src="https://img.youtube.com/vi/${school.video.videoUrl.split('=')[1]}/hqdefault.jpg" alt="Video Thumbnail" width="150">
-                                    <p>Created by: ${school.video.studentName}</p>
-                                    <a href="${school.video.videoUrl}" target="_blank">Watch Video</a>
-                                </div>
                             </td>
                         </tr>
                     </table>
